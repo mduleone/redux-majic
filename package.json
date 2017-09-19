@@ -1,0 +1,45 @@
+{
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-jest": "^21.0.2",
+    "babel-plugin-lodash": "^3.2.11",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-modern-node": "^3.2.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "flow-bin": "^0.54.1",
+    "jest": "^21.1.0"
+  },
+  "jest": {
+    "testRegex": "tests/.*\\.test\\.js$",
+    "coverageDirectory": "<rootDir>/coverage",
+    "cacheDirectory": "<rootDir>/.jest",
+    "notify": true,
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js",
+      "!tests/**",
+      "!node_modules/**"
+    ]
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "name": "majic-parser",
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "prepubish": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:coverage:ci": "jest --coverage --runInBand"
+  }
+}
