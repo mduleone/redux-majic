@@ -9,11 +9,11 @@ export function getJsonapi(response: JsonApiResponse): {} {
     return get(response, 'jsonapi', {});
 }
 
-export function getLinks(response: {links?: {}}): {} {
+export function getLinks(response: {links: ?{}}): {} {
     return get(response, 'links', {});
 }
 
-export function getMeta(response: {meta?: {}}): {} {
+export function getMeta(response: {meta: ?{}}): {} {
     return get(response, 'meta', {});
 }
 
