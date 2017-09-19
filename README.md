@@ -1,3 +1,4 @@
-# Module Architecture for JsonAPI Ingesting Consumers (:sparkles: MAJIC :sparkles:)
+# :sparkles: MAJIC :sparkles:
+### Module Architecture for JsonAPI Ingesting Consumers
 
 Coming soon!
