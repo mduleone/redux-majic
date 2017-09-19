@@ -1,5 +1,14 @@
 // @flow
 
+export type JsonApiError = {
+    id?: string,
+    code?: string,
+    status?: string,
+    source?: {},
+    title?: string,
+    detail?: string,
+};
+
 export type JsonApiEntity = {
     id: string,
     type: string,
@@ -12,8 +21,8 @@ export type JsonApiEntity = {
 export type JsonApiResponse = {
     data?: JsonApiEntity|JsonApiEntity[],
     meta?: {},
-    errors?: Array<{}>,
+    errors?: JsonApiError[],
     jsonapi?: {},
     links?: {},
-    included?: Array<{}>,
+    included?: JsonApiEntity[],
 };
