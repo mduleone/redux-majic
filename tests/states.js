@@ -10,7 +10,7 @@ export const errorResponse = {
     ]
 };
 
-export const jsonApiArticle1withRelationships = {
+export const jsonApiArticle1 = {
     "jsonapi": {
         "version": "1.0"
     },
@@ -112,7 +112,7 @@ export const jsonApiArticle1withRelationships = {
     ]
 };
 
-export const parsedArticle1withRelationships = {
+export const parsedArticle1 = {
     "jsonapi": {
         "version": "1.0"
     },
@@ -209,9 +209,9 @@ export const parsedArticle1withRelationships = {
     }
 };
 
-export const includedArticle1withRelationships = pick(parsedArticle1withRelationships, 'people', 'comments');
+export const includedArticle1 = pick(parsedArticle1, 'people', 'comments');
 
-export const jsonApiArticle2withArticleRelationships = {
+export const jsonApiArticle2 = {
     "jsonapi": {
         "version": "1.0"
     },
@@ -419,7 +419,7 @@ export const jsonApiArticle2withArticleRelationships = {
     ]
 };
 
-export const parsedArticle2withArticleRelationships = {
+export const parsedArticle2 = {
     "jsonapi": {
         "version": "1.0"
     },

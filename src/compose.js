@@ -149,7 +149,7 @@ export function buildIncluded(data: MajicDataEntity, schema: MajicIncluded): Maj
     };
 }
 
-export function buildRelationship(relation: {}, schema: MajicRelationship): {} {
+export function buildRelationship(relation: {meta: {}, data: MajicDataEntity|MajicDataEntity[]}, schema: MajicRelationship): {} {
     const meta = {};
     let data;
 
@@ -201,7 +201,7 @@ export function validateSchema(schema: MajicCompositionSchema) :boolean {
     return true;
 }
 
-export function validateArray(candidate: string, entity: string) {
+export function validateArray(candidate: MajicRelationship[]|MajicIncluded[]|string[], entity: string) {
     if (!Array.isArray(candidate)) {
         throw new Error(`${entity} is not an Array`);
     }

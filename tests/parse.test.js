@@ -7,14 +7,14 @@ describe('getJsonapi', () => {
     let expected;
     let response;
     it('returns the jsonapi object on the response if it exists', () => {
-        response = {...states.jsonApiArticle1withRelationships};
+        response = {...states.jsonApiArticle1};
         expected = response.jsonapi;
         actual = parse.getJsonapi(response);
         expect(actual).toEqual(expected);
     });
 
     it('returns an empty object if jsonapi is missing', () => {
-        response = omit(states.jsonApiArticle1withRelationships, 'jsonapi');
+        response = omit(states.jsonApiArticle1, 'jsonapi');
         expected = {};
         actual = parse.getJsonapi(response);
         expect(actual).toEqual(expected);
@@ -26,14 +26,14 @@ describe('getLinks', () => {
     let expected;
     let response;
     it('returns the links object on the response if it exists', () => {
-        response = {...states.jsonApiArticle1withRelationships};
+        response = {...states.jsonApiArticle1};
         expected = response.links;
         actual = parse.getLinks(response);
         expect(actual).toEqual(expected);
     });
 
     it('returns an empty object if links is missing', () => {
-        response = omit(states.jsonApiArticle1withRelationships, 'links');
+        response = omit(states.jsonApiArticle1, 'links');
         expected = {};
         actual = parse.getLinks(response);
         expect(actual).toEqual(expected);
@@ -45,14 +45,14 @@ describe('getMeta', () => {
     let expected;
     let response;
     it('returns the meta object on the response if it exists', () => {
-        response = {...states.jsonApiArticle1withRelationships};
+        response = {...states.jsonApiArticle1};
         expected = response.meta;
         actual = parse.getMeta(response);
         expect(actual).toEqual(expected);
     });
 
     it('returns an empty object if meta is missing', () => {
-        response = omit(states.jsonApiArticle1withRelationships, 'meta');
+        response = omit(states.jsonApiArticle1, 'meta');
         expected = {};
         actual = parse.getMeta(response);
         expect(actual).toEqual(expected);
@@ -61,7 +61,7 @@ describe('getMeta', () => {
 
 describe('getAllIncludedTypes', () => {
     it('returns an array of strings of the type keys from the entities in the included array', () => {
-        const response = {...states.jsonApiArticle1withRelationships};
+        const response = {...states.jsonApiArticle1};
         const expected = ['people', 'comments'];
         const actual = parse.getAllIncludedTypes(response);
 
@@ -69,7 +69,7 @@ describe('getAllIncludedTypes', () => {
     });
 
     it('returns an empty array if the included array is missing', () => {
-        const response = omit(states.jsonApiArticle1withRelationships, 'included');
+        const response = omit(states.jsonApiArticle1, 'included');
         const expected = [];
         const actual = parse.getAllIncludedTypes(response);
 
@@ -79,15 +79,15 @@ describe('getAllIncludedTypes', () => {
 
 describe('extractIncludedType', () => {
     it('extracts all entities from the included array of the requested type', () => {
-        const response = {...states.jsonApiArticle1withRelationships};
-        const expected = states.includedArticle1withRelationships.people;
+        const response = {...states.jsonApiArticle1};
+        const expected = states.includedArticle1.people;
         const actual = parse.extractIncludedType(response, 'people');
 
         expect(actual).toEqual(expected);
     });
 
     it('returns an empty object if the entity type is not in the included array', () => {
-        const response = states.jsonApiArticle1withRelationships;
+        const response = states.jsonApiArticle1;
         const expected = {};
         const actual = parse.extractIncludedType(response, 'articles');
 
@@ -97,15 +97,15 @@ describe('extractIncludedType', () => {
 
 describe('getIncluded', () => {
     it('parses the included array in to an object with the types received and received entites', () => {
-        const response = {...states.jsonApiArticle1withRelationships};
-        const expected = states.includedArticle1withRelationships;
+        const response = {...states.jsonApiArticle1};
+        const expected = states.includedArticle1;
         const actual = parse.getIncluded(response);
 
         expect(actual).toEqual(expected);
     });
 
     it('returns an empty object if the included array does not exist', () => {
-        const response = omit(states.jsonApiArticle1withRelationships, 'included');
+        const response = omit(states.jsonApiArticle1, 'included');
         const expected = {};
         const actual = parse.getIncluded(response);
 
@@ -113,7 +113,7 @@ describe('getIncluded', () => {
     });
 
     it('returns an empty object if the included array is empty', () => {
-        const response = {...states.jsonApiArticle1withRelationships, 'included': []};
+        const response = {...states.jsonApiArticle1, 'included': []};
         const expected = {};
         const actual = parse.getIncluded(response);
 
@@ -142,8 +142,8 @@ describe('getData', () => {
     });
 
     it('parses the data key of the response and preserves each key in the keys array for the entity', () => {
-        response = {...states.jsonApiArticle1withRelationships};
-        expected = {articles: states.parsedArticle1withRelationships.articles};
+        response = {...states.jsonApiArticle1};
+        expected = {articles: states.parsedArticle1.articles};
         actual = parse.getData(response);
 
         expect(actual).toEqual(expected);
@@ -172,16 +172,16 @@ describe('parse', () => {
     });
 
     it('properly converts and flattens a jsonapi response', () => {
-        response = {...states.jsonApiArticle1withRelationships};
-        expected = states.parsedArticle1withRelationships;
+        response = {...states.jsonApiArticle1};
+        expected = states.parsedArticle1;
         actual = parse.parseResponse(response);
 
         expect(actual).toEqual(expected);
     });
 
     it('does not include keys for included entites in keys array', () => {
-        response = {...states.jsonApiArticle2withArticleRelationships};
-        expected = states.parsedArticle2withArticleRelationships;
+        response = {...states.jsonApiArticle2};
+        expected = states.parsedArticle2;
         actual = parse.parseResponse(response);
 
         expect(actual).toEqual(expected);
@@ -242,8 +242,8 @@ describe('parseFactory', () => {
             });
 
             it('properly converts and flattens a jsonapi response', () => {
-                response = {...states.jsonApiArticle1withRelationships};
-                expected = states.parsedArticle1withRelationships;
+                response = {...states.jsonApiArticle1};
+                expected = states.parsedArticle1;
                 parser = parse.parseResponseFactory((states.identity));
                 actual = parser(response);
 
@@ -251,8 +251,8 @@ describe('parseFactory', () => {
             });
 
             it('does not include keys for included entites in keys array', () => {
-                response = {...states.jsonApiArticle2withArticleRelationships};
-                expected = states.parsedArticle2withArticleRelationships;
+                response = {...states.jsonApiArticle2};
+                expected = states.parsedArticle2;
                 parser = parse.parseResponseFactory(states.identity);
                 actual = parser(response);
 

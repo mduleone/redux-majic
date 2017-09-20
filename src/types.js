@@ -41,13 +41,14 @@ export type JsonApiRelationshipData = {
 // Internal types
 export type MajicRelationship = {
     key: string,
-    defaultType: ?string,
+    defaultType: string,
     meta: ?string[],
 };
 
 export type MajicIncluded = {
     key: string,
     type: string,
+    defaultType: string,
     attributes: ?string[],
     relationships: ?MajicRelationship[],
     meta: ?string[],
