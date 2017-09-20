@@ -1,4 +1,4 @@
-import {pick} from 'lodash/object';
+import {pick, omit} from 'lodash/object';
 
 export const errorResponse = {
     errors: [
@@ -662,7 +662,7 @@ export const parsedSingleArticle1 = {
 }
 
 export function revisionNumberIdentifier(entity) {
-    return `${entity.id}${'meta' in entity && 'revisionNumber' in entity.meta ? `:${entity.meta.revisionNumber}` : ''}`;
+    return `${entity.id}${('meta' in entity && 'revisionNumber' in entity.meta)? `:${entity.meta.revisionNumber}`: ''}`;
 }
 
 export function identity(entity) {
@@ -739,4 +739,314 @@ export const parsedMultipleArticle1 = {
             }
         }
     }
-}
+};
+
+export const composedArticle1 = {
+    "meta": {
+        "requestId": 42
+    },
+    "data": [
+        {
+            "type": "articles",
+            "id": "1",
+            "attributes": {
+                "title": "JSON API paints my bikeshed!"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                },
+                "comments": {
+                    "data": [
+                        {
+                            "type": "comments",
+                            "id": "5"
+                        },
+                        {
+                            "type": "comments",
+                            "id": "12"
+                        }
+                    ]
+                }
+            },
+            "meta": {
+                "revisionNumber": 1
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "people",
+            "id": "9",
+            "attributes": {
+                "first-name": "Dan",
+                "last-name": "Gebhardt",
+                "twitter": "dgeb"
+            }
+        },
+        {
+            "type": "comments",
+            "id": "5",
+            "attributes": {
+                "body": "First!"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "comments",
+            "id": "12",
+            "attributes": {
+                "body": "I like XML better"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                }
+            }
+        }
+    ]
+};
+
+export const metaComposedArticle1 = {
+    "data": [
+        {
+            "type": "articles",
+            "id": "1",
+            "meta": {
+                "revisionNumber": 1
+            }
+        }
+    ]
+};
+
+export const relationshipsComposedArticle1 = {
+    "data": [
+        {
+            "type": "articles",
+            "id": "1",
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                },
+                "comments": {
+                    "data": [
+                        {
+                            "type": "comments",
+                            "id": "5"
+                        },
+                        {
+                            "type": "comments",
+                            "id": "12"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+};
+
+export const includedComposedArticle1 = {
+    "data": [
+        {
+            "type": "articles",
+            "id": "1",
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                },
+                "comments": {
+                    "data": [
+                        {
+                            "type": "comments",
+                            "id": "5"
+                        },
+                        {
+                            "type": "comments",
+                            "id": "12"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "people",
+            "id": "9",
+            "attributes": {
+                "first-name": "Dan",
+                "last-name": "Gebhardt",
+                "twitter": "dgeb"
+            }
+        },
+        {
+            "type": "comments",
+            "id": "5",
+            "attributes": {
+                "body": "First!"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "comments",
+            "id": "12",
+            "attributes": {
+                "body": "I like XML better"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                }
+            }
+        }
+    ]
+};
+
+export const attributesComposedArticle1 = {
+    "data": [
+        {
+            "type": "articles",
+            "id": "1",
+            "attributes": {
+                "title": "JSON API paints my bikeshed!"
+            },
+        }
+    ]
+};
+
+export const topLevelMetaComposedArticle1 = {
+    "meta": {
+        "requestId": 42
+    },
+    "data": [
+        {
+            "type": "articles",
+            "id": "1"
+        }
+    ]
+};
+
+export const article1toCompose = {
+    "type": "articles",
+    "id": "1",
+    "title": "JSON API paints my bikeshed!",
+    "revisionNumber": 1,
+    "requestId": 42,
+    "links": {
+        "self": "http://example.com/articles/1"
+    },
+    "author": {
+        "links": {
+            "self": "http://example.com/articles/1/relationships/author",
+            "related": "http://example.com/articles/1/author"
+        },
+        "data": {
+            "type": "people",
+            "id": "9",
+            "first-name": "Dan",
+            "last-name": "Gebhardt",
+            "twitter": "dgeb",
+            "links": {
+                "self": "http://example.com/people/9"
+            }
+        }
+    },
+    "comments": {
+        "links": {
+            "self": "http://example.com/articles/1/relationships/comments",
+            "related": "http://example.com/articles/1/comments"
+        },
+        "data": [
+            {
+                "type": "comments",
+                "id": "5",
+                "body": "First!",
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "2"
+                    }
+                },
+                "links": {
+                    "self": "http://example.com/comments/5"
+                }
+            },
+            {
+                "type": "comments",
+                "id": "12",
+                "body": "I like XML better",
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                },
+                "links": {
+                    "self": "http://example.com/comments/12"
+                }
+            }
+        ]
+    }
+};
+
+export const articleSchema = {
+    "type": "articles",
+    "attributes": ["title"],
+    "topLevelMeta": ["requestId"],
+    "meta": ["revisionNumber"],
+    "relationships": [
+        {
+            "key": "author",
+            "defaultType": "people"
+        },
+        {
+            "key": "comments",
+            "defaultType": "comments"
+        }
+    ],
+    "included": [
+        {
+            "key": "author",
+            "attributes": ["first-name", "last-name", "twitter"]
+        },
+        {
+            "key": "comments",
+            "attributes": ["body"],
+            "relationships": [
+                {
+                    "key": "author",
+                    "defaultType": "people"
+                }
+            ]
+        }
+    ]
+};

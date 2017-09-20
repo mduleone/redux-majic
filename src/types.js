@@ -20,7 +20,7 @@ export type JsonApiEntity = {
 };
 
 export type JsonApiResponse = {
-    data: ?JsonApiEntity|JsonApiEntity[],
+    data: ?JsonApiEntity|?JsonApiEntity[],
     meta: ?{},
     errors: ?JsonApiError[],
     jsonapi: ?{},
@@ -28,14 +28,25 @@ export type JsonApiResponse = {
     included: ?JsonApiEntity[],
 };
 
+export type JsonApiRequestRelationship = {
+    meta: ?{},
+    data: ?JsonApiRelationshipData|JsonApiRelationshipData[],
+};
+
+export type JsonApiRelationshipData = {
+    type: string,
+    id: string,
+}
+
 // Internal types
 export type MajicRelationship = {
     key: string,
-    type: string,
+    defaultType: ?string,
+    meta: ?string[],
 };
 
 export type MajicIncluded = {
-    key: ?string,
+    key: string,
     type: string,
     attributes: ?string[],
     relationships: ?MajicRelationship[],
@@ -44,6 +55,7 @@ export type MajicIncluded = {
 
 export type MajicCompositionSchema = {
     type: string,
+    topLevelMeta: ?string[],
     attributes: ?string[],
     relationships: ?MajicRelationship[],
     meta: ?string[],
@@ -52,4 +64,19 @@ export type MajicCompositionSchema = {
 
 export type MajicDataEntity = {
     id: string,
+    type: string,
+};
+
+export type MajicJsonApiRequest = {
+    data: MajicJsonApiEntity[],
+    meta: ?{},
+    included: ?MajicJsonApiEntity[],
+};
+
+export type MajicJsonApiEntity = {
+    id: string,
+    type: string,
+    attributes: ?{},
+    relationships: ?{},
+    meta: ?{},
 };
