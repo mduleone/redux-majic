@@ -77,136 +77,7 @@ describe('getAllIncludedTypes', () => {
     });
 });
 
-describe('extractIncludedType', () => {
-    it('extracts all entities from the included array of the requested type', () => {
-        const response = {...states.jsonApiArticle1};
-        const expected = states.includedArticle1.people;
-        const actual = parse.extractIncludedType(response, 'people');
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('returns an empty object if the entity type is not in the included array', () => {
-        const response = states.jsonApiArticle1;
-        const expected = {};
-        const actual = parse.extractIncludedType(response, 'articles');
-
-        expect(actual).toEqual(expected);
-    });
-});
-
-describe('getIncluded', () => {
-    it('parses the included array in to an object with the types received and received entites', () => {
-        const response = {...states.jsonApiArticle1};
-        const expected = states.includedArticle1;
-        const actual = parse.getIncluded(response);
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('returns an empty object if the included array does not exist', () => {
-        const response = omit(states.jsonApiArticle1, 'included');
-        const expected = {};
-        const actual = parse.getIncluded(response);
-
-        expect(actual).toEqual(expected); 
-    });
-
-    it('returns an empty object if the included array is empty', () => {
-        const response = {...states.jsonApiArticle1, 'included': []};
-        const expected = {};
-        const actual = parse.getIncluded(response);
-
-        expect(actual).toEqual(expected); 
-    });
-});
-
-describe('getData', () => {
-    let response;
-    let expected;
-    let actual;
-    it('returns an empty object if the data key is missing', () => {
-        response = {};
-        expected = {};
-        actual = parse.getData(response);
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('parses a singular entity on the data key of the response and preserves each key in the keys array for the entity', () => {
-        response = {...states.jsonApiSingleArticle1};
-        expected = {articles: states.parsedSingleArticle1.articles};
-        actual = parse.getData(response);
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('parses the data key of the response and preserves each key in the keys array for the entity', () => {
-        response = {...states.jsonApiArticle1};
-        expected = {articles: states.parsedArticle1.articles};
-        actual = parse.getData(response);
-
-        expect(actual).toEqual(expected);
-    });
-});
-
-describe('parse', () => {
-    let response;
-    let actual;
-    let expected;
-
-    it('returns an empty object if the response has none of the required keys', () => {
-        response = {some: 'wrong', key: 'value', object: 'pairs'};
-        expected = {};
-        actual = parse.parseResponse(response);
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('detects an errors array and passes it through untouched', () => {
-        response = {...states.errorResponse};
-        expected = states.errorResponse;
-        actual = parse.parseResponse(response);
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('properly converts and flattens a jsonapi response', () => {
-        response = {...states.jsonApiArticle1};
-        expected = states.parsedArticle1;
-        actual = parse.parseResponse(response);
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('does not include keys for included entites in keys array', () => {
-        response = {...states.jsonApiArticle2};
-        expected = states.parsedArticle2;
-        actual = parse.parseResponse(response);
-
-        expect(actual).toEqual(expected);
-    });
-
-    it('passes through the meta key if it receives an entity with no data key', () => {
-        response = {
-            "meta": {
-                "isTeapot": false
-            }
-        };
-        expected = {
-            "meta": {
-                "isTeapot": false
-            },
-            links: {},
-            jsonapi: {}
-        };
-        actual = parse.parseResponse(response);
-
-        expect(actual).toEqual(expected);
-    });
-});
-
-describe('parseFactory', () => {
+describe('parseResponseFactory', () => {
     let response;
     let parser;
     let expected;
@@ -222,72 +93,78 @@ describe('parseFactory', () => {
             expect(actual).toEqual(expected);
         });
 
-        describe('passes the parse tests:', () => {
-            it('returns an empty object if the response has none of the required keys', () => {
-                response = {some: 'wrong', key: 'value', object: 'pairs'};
-                expected = {};
-                parser = parse.parseResponseFactory(states.identity);
-                actual = parser(response);
+        it('returns an empty object if the response has none of the required keys', () => {
+            response = {some: 'wrong', key: 'value', object: 'pairs'};
+            expected = {};
+            parser = parse.parseResponseFactory(states.identity);
+            actual = parser(response);
 
-                expect(actual).toEqual(expected);
-            });
-
-            it('detects an errors array and passes it through untouched', () => {
-                response = {...states.errorResponse};
-                expected = states.errorResponse;
-                parser = parse.parseResponseFactory(states.identity);
-                actual = parser(response);
-
-                expect(actual).toEqual(expected);
-            });
-
-            it('properly converts and flattens a jsonapi response', () => {
-                response = {...states.jsonApiArticle1};
-                expected = states.parsedArticle1;
-                parser = parse.parseResponseFactory((states.identity));
-                actual = parser(response);
-
-                expect(actual).toEqual(expected);
-            });
-
-            it('does not include keys for included entites in keys array', () => {
-                response = {...states.jsonApiArticle2};
-                expected = states.parsedArticle2;
-                parser = parse.parseResponseFactory(states.identity);
-                actual = parser(response);
-
-                expect(actual).toEqual(expected);
-            });
-
-            it('passes through the meta key if it receives an entity with no data key', () => {
-                response = {
-                    "meta": {
-                        "isTeapot": false
-                    }
-                };
-                expected = {
-                    "meta": {
-                        "isTeapot": false
-                    },
-                    links: {},
-                    jsonapi: {}
-                };
-                parser = parse.parseResponseFactory(states.identity);
-                actual = parser(response);
-
-                expect(actual).toEqual(expected);
-            });
+            expect(actual).toEqual(expected);
         });
 
-        describe('passes getData tests:', () => {
-            it('parses a singular entity on the data key of the response and preserves each key in the keys array for the entity', () => {
-                response = {...states.jsonApiSingleArticle1};
-                expected = states.parsedSingleArticle1;
-                parser = parse.parseResponseFactory(states.identity);
-                actual = parser(response);
+        it('detects an errors array and passes it through untouched', () => {
+            response = {...states.errorResponse};
+            expected = states.errorResponse;
+            parser = parse.parseResponseFactory(states.identity);
+            actual = parser(response);
 
-                expect(actual).toEqual(expected);
-            });
+            expect(actual).toEqual(expected);
         });
+
+        it('properly converts and flattens a jsonapi response', () => {
+            response = {...states.jsonApiArticle1};
+            expected = states.parsedArticle1;
+            parser = parse.parseResponseFactory((states.identity));
+            actual = parser(response);
+
+            expect(actual).toEqual(expected);
+        });
+
+        it('does not include keys for included entites in keys array', () => {
+            response = {...states.jsonApiArticle2};
+            expected = states.parsedArticle2;
+            parser = parse.parseResponseFactory(states.identity);
+            actual = parser(response);
+
+            expect(actual).toEqual(expected);
+        });
+
+        it('passes through the meta key if it receives an entity with no data key', () => {
+            response = {
+                "meta": {
+                    "isTeapot": false
+                }
+            };
+            expected = {
+                "meta": {
+                    "isTeapot": false
+                },
+                links: {},
+                jsonapi: {}
+            };
+            parser = parse.parseResponseFactory(states.identity);
+            actual = parser(response);
+
+            expect(actual).toEqual(expected);
+        });
+
+        it('parses a singular entity on the data key of the response and preserves each key in the keys array for the entity', () => {
+            response = {...states.jsonApiSingleArticle1};
+            expected = states.parsedSingleArticle1;
+            parser = parse.parseResponseFactory(states.identity);
+            actual = parser(response);
+
+            expect(actual).toEqual(expected);
+        });
+    });
+});
+
+describe('parseResponse', () => {
+    it(`uses the element's 'id' field to identify all elements`, () => {
+        const response = {...states.jsonApiArticle1};
+        const expected = states.parsedArticle1;
+        const actual = parse.parseResponse(response);
+
+        expect(actual).toEqual(expected);
     });
 });
