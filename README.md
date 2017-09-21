@@ -4,7 +4,7 @@
 
 [![CircleCI](https://circleci.com/gh/mduleone/majic-parser.svg?style=shield)](https://circleci.com/gh/mduleone/majic-parser)
 
-This tool is intended to make working with a server that implements JsonAPI more friendly for front-end JavaScript applications.
+This tool makes building front-end JavaScript applications against JsonAPI backends easier.
 
 ## Installation
 

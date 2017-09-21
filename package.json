@@ -1,4 +1,6 @@
 {
+  "author": "Matt DuLeone (https://matt.dule.one/)",
+  "description": "",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -16,6 +18,7 @@
     "flow-bin": "^0.54.1",
     "jest": "^21.1.0"
   },
+  "files": ["lib/"],
   "jest": {
     "testRegex": "tests/.*\\.test\\.js$",
     "coverageDirectory": "<rootDir>/coverage",
@@ -29,17 +32,18 @@
       "!node_modules/**"
     ]
   },
+  "keywords": ["jsonapi", "json-api", "jsonapi-consumer", "json-api-consumer"],
   "license": "MIT",
   "main": "lib/index.js",
   "name": "majic-parser",
   "repository": "https://github.com/mduleone/majic-parser",
   "scripts": {
     "build": "babel src/ -d lib/",
-    "prepubish": "yarn build",
+    "prepublish": "yarn build",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.0.4"
+  "version": "0.0.5"
 }
