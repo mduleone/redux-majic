@@ -139,9 +139,7 @@ describe('parseResponseFactory', () => {
                 "meta": {
                     "isTeapot": false
                 },
-                __primaryEntities: [],
-                links: {},
-                jsonapi: {}
+                __primaryEntities: []
             };
             parser = parse.parseResponseFactory(states.identity);
             actual = parser(response);

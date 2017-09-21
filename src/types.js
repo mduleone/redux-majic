@@ -2,35 +2,35 @@
 
 // JsonAPI Entities
 export type JsonApiError = {
-    id: ?string,
-    code: ?string,
-    status: ?string,
-    source: ?{},
-    title: ?string,
-    detail: ?string,
+    id?: string,
+    code?: string,
+    status?: string,
+    source?: {},
+    title?: string,
+    detail?: string,
 };
 
 export type JsonApiEntity = {
     id: string,
     type: string,
-    attributes: ?{},
-    relationships: ?{},
-    meta: ?{},
-    links: ?{},
+    attributes?: {},
+    relationships?: {},
+    meta?: {},
+    links?: {},
 };
 
 export type JsonApiResponse = {
-    data: ?JsonApiEntity|?JsonApiEntity[],
-    meta: ?{},
-    errors: ?JsonApiError[],
-    jsonapi: ?{},
-    links: ?{},
-    included: ?JsonApiEntity[],
+    data?: JsonApiEntity|JsonApiEntity[],
+    meta?: {},
+    errors?: JsonApiError[],
+    jsonapi?: {},
+    links?: {},
+    included?: JsonApiEntity[],
 };
 
 export type JsonApiRequestRelationship = {
-    meta: ?{},
-    data: ?JsonApiRelationshipData|JsonApiRelationshipData[],
+    meta?: {},
+    data?: JsonApiRelationshipData|JsonApiRelationshipData[],
 };
 
 export type JsonApiRelationshipData = {
@@ -42,25 +42,25 @@ export type JsonApiRelationshipData = {
 export type MajicRelationship = {
     key: string,
     defaultType: string,
-    meta: ?string[],
+    meta?: string[],
 };
 
 export type MajicIncluded = {
     key: string,
     type: string,
-    defaultType: string,
-    attributes: ?string[],
-    relationships: ?MajicRelationship[],
-    meta: ?string[],
+    defaultType?: string,
+    attributes?: string[],
+    relationships?: MajicRelationship[],
+    meta?: string[],
 };
 
 export type MajicCompositionSchema = {
     type: string,
-    topLevelMeta: ?string[],
-    attributes: ?string[],
-    relationships: ?MajicRelationship[],
-    meta: ?string[],
-    included: ?MajicIncluded[],
+    topLevelMeta?: string[],
+    attributes?: string[],
+    relationships?: MajicRelationship[],
+    meta?: string[],
+    included?: MajicIncluded[],
 };
 
 export type MajicDataEntity = {
@@ -70,14 +70,32 @@ export type MajicDataEntity = {
 
 export type MajicJsonApiRequest = {
     data: MajicJsonApiEntity[],
-    meta: ?{},
-    included: ?MajicJsonApiEntity[],
+    meta?: {},
+    included?: MajicJsonApiEntity[],
 };
 
 export type MajicJsonApiEntity = {
     id: string,
     type: string,
-    attributes: ?{},
-    relationships: ?{},
-    meta: ?{},
+    attributes?: {},
+    relationships?: {},
+    meta?: {},
+};
+
+export type ParsedMajicEntity = {
+    meta?: {},
+    jsonapi?: {},
+    links?: {},
+    __primaryEntities?: string[],
+    [string]: MagicEntities,
+};
+
+export type ParsedMajicObjects = {
+    __primaryEntities?: string[],
+    [string]: MagicEntities,
+};
+
+export type MagicEntities = {
+    data: {},
+    keys?: string[],
 };

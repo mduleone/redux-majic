@@ -1,8 +1,10 @@
 // @flow
 
-import {isEmpty} from './utils';
+import {isEmpty, get} from './utils';
 import type {
     JsonApiResponse,
+    JsonApiRequestRelationship,
+    JsonApiRelationshipData,
     MajicCompositionSchema,
     MajicDataEntity,
     MajicRelationship,
@@ -21,7 +23,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     const {id, type} = data;
     const topLevelMeta = {};
     const attributes = {};
-    const relationships = {};
+    const relationships: {[string]: JsonApiRequestRelationship} = {};
     const meta = {};
     let included = [];
 
@@ -30,7 +32,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     }
 
     if (schema.topLevelMeta) {
-        schema.topLevelMeta.forEach(attr => {
+        schema.topLevelMeta.forEach((attr: string) => {
             if (!(attr in data)) {
                 return;
             }
@@ -40,7 +42,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     }
 
     if (schema.attributes) {
-        schema.attributes.forEach(attr => {
+        schema.attributes.forEach((attr: string) => {
             if (!(attr in data)) {
                 return;
             }
@@ -50,7 +52,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     }
 
     if (schema.relationships) {
-        schema.relationships.forEach(relation => {
+        schema.relationships.forEach((relation: MajicRelationship) => {
             if (!(relation.key in data)) {
                 return;
             }
@@ -60,7 +62,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     }
 
     if (schema.included) {
-        schema.included.forEach(includedEntity => {
+        schema.included.forEach((includedEntity: MajicIncluded) => {
             if (!(includedEntity.key in data)) {
                 return;
             }
@@ -74,7 +76,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     }
 
     if (schema.meta) {
-        schema.meta.forEach(attr => {
+        schema.meta.forEach((attr: string) => {
             if (!(attr in data)) {
                 return;
             }
@@ -111,7 +113,7 @@ export function buildIncluded(data: MajicDataEntity, schema: MajicIncluded): Maj
     const meta = {};
 
     if (schema.attributes) {
-        schema.attributes.forEach(attr => {
+        schema.attributes.forEach((attr: string) => {
             if (!(attr in data)) {
                 return;
             }
@@ -121,7 +123,7 @@ export function buildIncluded(data: MajicDataEntity, schema: MajicIncluded): Maj
     }
 
     if (schema.relationships) {
-        schema.relationships.forEach(relation => {
+        schema.relationships.forEach((relation: MajicRelationship) => {
             if (!(relation.key in data)) {
                 return;
             }
@@ -131,7 +133,7 @@ export function buildIncluded(data: MajicDataEntity, schema: MajicIncluded): Maj
     }
 
     if (schema.meta) {
-        schema.meta.forEach(attr => {
+        schema.meta.forEach((attr: string) => {
             if (!(attr in data)) {
                 return;
             }
@@ -142,37 +144,37 @@ export function buildIncluded(data: MajicDataEntity, schema: MajicIncluded): Maj
 
     return {
         id,
-        type: type || schema.defaultType,
+        type: type || schema.defaultType || '',
         ...(isEmpty(attributes) ? {} : {attributes}),
         ...(isEmpty(relationships) ? {} : {relationships}),
         ...(isEmpty(meta) ? {} : {meta}),
     };
 }
 
-export function buildRelationship(relation: {meta: {}, data: MajicDataEntity|MajicDataEntity[]}, schema: MajicRelationship): {} {
+export function buildRelationship(relation: {meta?: {}, data?: MajicDataEntity|MajicDataEntity[]}, schema: MajicRelationship): JsonApiRequestRelationship {
     const meta = {};
     let data;
 
     if (schema.meta) {
-        schema.meta.forEach(metaAttr => {
-            if (relation.meta[metaAttr]) {
-                meta[metaAttr] = relation.meta[metaAttr];
+        schema.meta.forEach((metaAttr: string) => {
+            if (relation.meta && (metaAttr in relation.meta)) {
+                meta[metaAttr] = relation.meta && relation.meta[metaAttr];
             }
         });
     }
 
     if (Array.isArray(relation.data)) {
-        data = relation.data.map(rel => {
+        data = relation.data.map((rel: JsonApiRelationshipData) => {
             return {
                 id: rel.id,
-                type: rel.type || schema.defaultType
+                type: rel.type || schema.defaultType || '',
             };
         });
     } else if (relation.data && !isEmpty(relation.data)) {
         data = {
             id: relation.data.id,
-            type: relation.data.type || schema.defaultType
-        }
+            type: relation.data.type || schema.defaultType || '',
+        };
     }
 
     return {
@@ -181,7 +183,7 @@ export function buildRelationship(relation: {meta: {}, data: MajicDataEntity|Maj
     };
 }
 
-export function validateSchema(schema: MajicCompositionSchema) :boolean {
+export function validateSchema(schema: MajicCompositionSchema): boolean {
     if (!schema.type) {
         throw new Error(`Schema ${JSON.stringify(schema)} missing 'type'`);
     }
@@ -201,7 +203,7 @@ export function validateSchema(schema: MajicCompositionSchema) :boolean {
     return true;
 }
 
-export function validateArray(candidate: MajicRelationship[]|MajicIncluded[]|string[], entity: string) {
+export function validateArray(candidate: MajicRelationship[]|MajicIncluded[]|string[], entity: string): boolean {
     if (!Array.isArray(candidate)) {
         throw new Error(`${entity} is not an Array`);
     }
@@ -209,7 +211,7 @@ export function validateArray(candidate: MajicRelationship[]|MajicIncluded[]|str
     return true;
 }
 
-export function validateSimpleSchema(candidate: string, entity: string) {
+export function validateSimpleSchema(candidate: string, entity: string): boolean {
     if (typeof candidate !== 'string') {
         throw new Error(`${entity} ${JSON.stringify(candidate)} is not a valid ${entity}`);
     }
@@ -217,7 +219,7 @@ export function validateSimpleSchema(candidate: string, entity: string) {
     return true;
 }
 
-export function validateRelationshipSchema(candidate: MajicRelationship) {
+export function validateRelationshipSchema(candidate: MajicRelationship): boolean {
     if (typeof candidate !== 'object') {
         throw new Error(`Relationship ${JSON.stringify(candidate)} is not an object`);
     }
@@ -237,7 +239,7 @@ export function validateRelationshipSchema(candidate: MajicRelationship) {
     return true;
 }
 
-export function validateIncludedSchema(schema: MajicIncluded) :boolean {
+export function validateIncludedSchema(schema: MajicIncluded): boolean {
     if (typeof schema !== 'object') {
         throw new Error(`included ${JSON.stringify(schema)} is not an object`);
     }

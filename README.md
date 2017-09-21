@@ -541,7 +541,6 @@ into the below object. Note the identifiers in the `data` object and `keys` arra
     "links": {
         "self": "resource-linkage"
     },
-    "meta": {},
     "__primaryEntities": ["articles"],
     "articles": {
         "keys": ["1:1"],

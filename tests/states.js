@@ -647,7 +647,6 @@ export const parsedSingleArticle1 = {
         "self": "resource-linkage"
     },
     "__primaryEntities": ["articles"],
-    "meta": {},
     "articles": {
         "keys": ["1"],
         "data": {
@@ -718,7 +717,6 @@ export const parsedMultipleArticle1 = {
     "links": {
         "self": "resource-linkage"
     },
-    "meta": {},
     "__primaryEntities": ["articles"],
     "articles": {
         "keys": ["1:1"],

@@ -1,15 +1,15 @@
 // @flow
 
+import type {ParsedMajicObjects} from './types';
+
 export function get(obj: {}, attribute: string, defaultValue: any = {}): any {
     return (attribute in obj) ? obj[attribute] : defaultValue;
 }
 
-export function pick(obj: {}, attributes: string|string[]): {} {
-    if (!Array.isArray(attributes)) {
-        attributes = [attributes];
-    }
+export function pick(obj: {}, attributes: string|string[]): {[string]: any} {
+    attributes = Array.isArray(attributes) ? attributes : [attributes];
 
-    return attributes.reduce((aggregator, attribute) => {
+    return attributes.reduce((aggregator: {}, attribute: string) => {
         if (attribute in obj) {
             aggregator[attribute] = obj[attribute];
         }
@@ -18,12 +18,10 @@ export function pick(obj: {}, attributes: string|string[]): {} {
     }, {});
 }
 
-export function omit(obj: {}, attributes: string|string[]): {} {
-    if (!Array.isArray(attributes)) {
-        attributes = [attributes];
-    }
+export function omit(obj: {}, attributes: string|string[]): {[string]: any} {
+    attributes = Array.isArray(attributes) ? attributes : [attributes];
 
-    return Object.keys(obj).reduce((aggregator, attribute) => {
+    return Object.keys(obj).reduce((aggregator: {}, attribute: string) => {
         if (!attributes.includes(attribute)) {
             aggregator[attribute] = obj[attribute];
         }
@@ -33,14 +31,14 @@ export function omit(obj: {}, attributes: string|string[]): {} {
 }
 
 export function stringUniq(arr: string[]): string[] {
-    return arr.reduce((agg, curr) => (agg.includes(curr) ? [...agg] : [...agg, curr]), []);
+    return arr.reduce((agg: string[], curr: string) => (agg.includes(curr) ? [...agg] : [...agg, curr]), []);
 }
 
-export function mergeMajicObjects(majic1: {__primaryEntities: ?string[]}, majic2: {__primaryEntities: ?string[]}): {} {
-    const majic1keys = Object.keys(majic1);
-    let majic2keys = Object.keys(majic2);
+export function mergeMajicObjects(majic1: ParsedMajicObjects, majic2: ParsedMajicObjects): ParsedMajicObjects {
+    const majic1keys: string[] = Object.keys(majic1);
+    let majic2keys: string[] = Object.keys(majic2);
 
-    const newMajicObject = majic1keys.reduce((majics, key) => {
+    const newMajicObject: ParsedMajicObjects = majic1keys.reduce((majics, key) => {
         if (key === '__primaryEntities') {
             majics.__primaryEntities = stringUniq([...(majic1.__primaryEntities || []), ...(majic2.__primaryEntities || [])]);
             majic2keys = [
@@ -50,14 +48,16 @@ export function mergeMajicObjects(majic1: {__primaryEntities: ?string[]}, majic2
 
             return majics;
         }
-        const {data: entity1data, keys: entity1keys} = majic1[key] || {};
-        const {data: entity2data, keys: entity2keys} = majic2[key] || {};
+
+        const {data: entity1data, keys: entity1keys}: {data: {}, keys?: string[]} = majic1[key] || {};
+        const {data: entity2data, keys: entity2keys}: {data: {}, keys?: string[]} = majic2[key] || {};
+
         // majic1 copy of the received entity wins
-        const data = {
+        const data: {} = {
             ...entity2data,
             ...entity1data,
         };
-        const keys = stringUniq([...(entity1keys ? entity1keys : []), ...(entity2keys ? entity2keys : [])]);
+        const keys: string[] = stringUniq([...(entity1keys ? entity1keys : []), ...(entity2keys ? entity2keys : [])]);
 
         majics[key] = {
             data,
@@ -76,7 +76,11 @@ export function mergeMajicObjects(majic1: {__primaryEntities: ?string[]}, majic2
 
     // Go through all the keys from the second object that weren't processed
     // with the first object, and add them to the return value
-    majic2keys.forEach(key => newMajicObject[key] = majic2[key]);
+    majic2keys.forEach((key: string) => {
+        if (key !== '__primaryEntities') {
+            newMajicObject[key] = majic2[key];
+        }
+    });
 
     return newMajicObject;
 }
