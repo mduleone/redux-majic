@@ -24,7 +24,7 @@
     "coverageDirectory": "<rootDir>/coverage",
     "cacheDirectory": "<rootDir>/.jest",
     "notify": true,
-    "collectCoverage": false,
+    "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.js",
       "!src/index.js",
@@ -45,5 +45,5 @@
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.0.5"
+  "version": "0.0.6"
 }
