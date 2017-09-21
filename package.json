@@ -15,10 +15,13 @@
     "babel-preset-modern-node": "^3.2.0",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "codecov": "^2.3.0",
     "flow-bin": "^0.54.1",
     "jest": "^21.1.0"
   },
-  "files": ["lib/"],
+  "files": [
+    "lib/"
+  ],
   "jest": {
     "testRegex": "tests/.*\\.test\\.js$",
     "coverageDirectory": "<rootDir>/coverage",
@@ -32,7 +35,12 @@
       "!node_modules/**"
     ]
   },
-  "keywords": ["jsonapi", "json-api", "jsonapi-consumer", "json-api-consumer"],
+  "keywords": [
+    "jsonapi",
+    "json-api",
+    "jsonapi-consumer",
+    "json-api-consumer"
+  ],
   "license": "MIT",
   "main": "lib/index.js",
   "name": "majic-parser",
