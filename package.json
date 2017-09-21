@@ -1,7 +1,5 @@
 {
-  "dependencies": {
-    "lodash": "^4.17.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -34,6 +32,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "name": "majic-parser",
+  "repository": "https://github.com/mduleone/majic-parser",
   "scripts": {
     "build": "babel src/ -d lib/",
     "prepubish": "npm run build",
@@ -42,5 +41,5 @@
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.0.1"
+  "version": "0.0.2"
 }

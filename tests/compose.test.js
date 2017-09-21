@@ -1,6 +1,6 @@
-import {pick, omit} from 'lodash/object';
-import * as states from './states';
+import {pick, omit} from '../src/utils';
 import * as compose from '../src/compose';
+import * as states from './states';
 
 describe('composeRequest', () => {
     let data;

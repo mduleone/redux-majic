@@ -1,8 +1,6 @@
 // @flow
 
-import {get, pick, merge} from 'lodash/object';
-import {uniq} from 'lodash/array';
-import {isEmpty} from 'lodash/lang';
+import {get, pick, stringUniq, mergeMajicObjects, isEmpty} from './utils';
 import type {JsonApiResponse, JsonApiError} from './types';
 
 export function getJsonapi(response: JsonApiResponse): {} {
@@ -18,7 +16,7 @@ export function getMeta(response: {meta: ?{}}): {} {
 }
 
 export function getAllIncludedTypes(response: JsonApiResponse): Array<string> {
-    return uniq(get(response, 'included', []).map(({type}) => type));
+    return stringUniq(get(response, 'included', []).map(({type}) => type));
 }
 
 export function parseResponseFactory(identifier: Function): Function {
@@ -95,7 +93,7 @@ export function parseResponseFactory(identifier: Function): Function {
             jsonapi: getJsonapi(response),
             links: getLinks(response),
             meta: getMeta(response),
-            ...merge(getData(response), getIncluded(response)),
+            ...mergeMajicObjects(getData(response), getIncluded(response)),
         };
     };
 }

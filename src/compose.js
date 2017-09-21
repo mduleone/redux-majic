@@ -1,6 +1,6 @@
 // @flow
 
-import {isEmpty} from 'lodash/lang';
+import {isEmpty} from './utils';
 import type {
     JsonApiResponse,
     MajicCompositionSchema,

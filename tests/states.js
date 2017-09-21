@@ -1,4 +1,4 @@
-import {pick, omit} from 'lodash/object';
+import {pick} from '../src/utils';
 
 export const errorResponse = {
     errors: [
@@ -209,7 +209,7 @@ export const parsedArticle1 = {
     }
 };
 
-export const includedArticle1 = pick(parsedArticle1, 'people', 'comments');
+export const includedArticle1 = pick(parsedArticle1, ['people', 'comments']);
 
 export const jsonApiArticle2 = {
     "jsonapi": {

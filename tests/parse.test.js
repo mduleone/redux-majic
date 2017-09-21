@@ -1,4 +1,4 @@
-import {omit} from 'lodash/object';
+import {omit} from '../src/utils';
 import * as parse from '../src/parse';
 import * as states from './states';
 
