@@ -35,11 +35,11 @@
   "repository": "https://github.com/mduleone/majic-parser",
   "scripts": {
     "build": "babel src/ -d lib/",
-    "prepubish": "npm run build",
+    "prepubish": "yarn build",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.0.2"
+  "version": "0.0.3"
 }
