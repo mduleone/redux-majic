@@ -122,6 +122,7 @@ export const parsedArticle1 = {
     "meta": {
         "revisionNumber": 0
     },
+    "__primaryEntities": ["articles"],
     "articles": {
         "keys": ["1"],
         "data": {
@@ -429,6 +430,7 @@ export const parsedArticle2 = {
     "meta": {
         "revisionNumber": 0
     },
+    "__primaryEntities": ["articles"],
     "articles": {
         "keys": ["2"],
         "data": {
@@ -644,6 +646,7 @@ export const parsedSingleArticle1 = {
     "links": {
         "self": "resource-linkage"
     },
+    "__primaryEntities": ["articles"],
     "meta": {},
     "articles": {
         "keys": ["1"],
@@ -716,6 +719,7 @@ export const parsedMultipleArticle1 = {
         "self": "resource-linkage"
     },
     "meta": {},
+    "__primaryEntities": ["articles"],
     "articles": {
         "keys": ["1:1"],
         "data": {

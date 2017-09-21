@@ -182,6 +182,7 @@ describe('mergeMajicObjects', () => {
 
     beforeAll(() => {
         totalCombined = {
+            __primaryEntities: ['articles'],
             articles: {
                 keys: ['2', '29', '51'],
                 data: {
@@ -238,6 +239,7 @@ describe('mergeMajicObjects', () => {
 
     it('merges two majic objects with no overlapping keys', () => {
         majic1 = {
+            __primaryEntities: ['articles'],
             articles: {
                 keys: ['2', '29', '51'],
                 data: {
@@ -298,6 +300,7 @@ describe('mergeMajicObjects', () => {
 
     it('merges two majic objects with overlapping keys and no collisions', () => {
         majic1 = {
+            __primaryEntities: ['articles'],
             articles: {
                 keys: ['2', '29'],
                 data: {
@@ -315,6 +318,7 @@ describe('mergeMajicObjects', () => {
             }
         };
         majic2 = {
+            __primaryEntities: ['articles'],
             articles: {
                 keys: ['51'],
                 data: {
@@ -365,6 +369,7 @@ describe('mergeMajicObjects', () => {
 
     it('merges two majic objects with overlapping keys and collisions', () => {
         majic1 = {
+            __primaryEntities: ['articles'],
             articles: {
                 keys: ['2', '29'],
                 data: {
@@ -382,6 +387,81 @@ describe('mergeMajicObjects', () => {
             }
         };
         majic2 = {
+            __primaryEntities: ['articles'],
+            articles: {
+                keys: ['51'],
+                data: {
+                    '29': {
+                        id: '29',
+                        type: 'articles',
+                        title: `Oh no! I'm in the second object, so I lose!`
+                    },
+                    '51': {
+                        id: '51',
+                        type: 'articles',
+                        title: 'Article 51! SpoOooOoookyyy'
+                    },
+                    '88': {
+                        id: '88',
+                        type: 'articles',
+                        title: 'Lucky number 88!'
+                    }
+                }
+            },
+            comments: {
+                data: {
+                    '5': {
+                        'type': 'comments',
+                        'id': '5',
+                        'body': 'First!',
+                        'author': {
+                            'data': {
+                                'type': 'people',
+                                'id': '2'
+                            }
+                        }
+                    },
+                    '12': {
+                        'type': 'comments',
+                        'id': '12',
+                        'body': 'I like XML better',
+                        'author': {
+                            'data': {
+                                'type': 'people',
+                                'id': '9'
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        expected = totalCombined;
+        actual = utils.mergeMajicObjects(majic1, majic2);
+
+        expect(actual).toEqual(expected);
+    });
+
+    it('merges two majic objects with overlapping keys and collisions', () => {
+        majic1 = {
+            __primaryEntities: ['articles'],
+            articles: {
+                keys: ['2', '29'],
+                data: {
+                    '2': {
+                        id: '2',
+                        type: 'articles',
+                        title: 'This is my second article!'
+                    },
+                    '29': {
+                        id: '29',
+                        type: 'articles',
+                        title: 'How to stay under 30 forever'
+                    }
+                }
+            }
+        };
+        majic2 = {
+            __primaryEntities: ['articles'],
             articles: {
                 keys: ['51'],
                 data: {

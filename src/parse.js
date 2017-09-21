@@ -74,9 +74,14 @@ export function parseResponseFactory(identifier: Function): Function {
                     ...getMeta(current),
                 };
 
+                entities['__primaryEntities'] = stringUniq([
+                    ...entities['__primaryEntities'],
+                    type,
+                ]);
+
                 return entities;
             },
-            {}
+            {'__primaryEntities': []}
         );
     }
 

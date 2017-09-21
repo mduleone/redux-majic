@@ -41,6 +41,15 @@ export function mergeMajicObjects(majic1: {}, majic2: {}): {} {
     let majic2keys = Object.keys(majic2);
 
     const newMajicObject = majic1keys.reduce((majics, key) => {
+        if (key === '__primaryEntities') {
+            majics.__primaryEntities = stringUniq([...(majic1.__primaryEntities || []), ...(majic2.__primaryEntities || [])]);
+            majic2keys = [
+                ...majic2keys.slice(0, majic2keys.indexOf(key)),
+                ...majic2keys.slice(majic2keys.indexOf(key) + 1),
+            ];
+
+            return majics;
+        }
         const {data: entity1data, keys: entity1keys} = majic1[key] || {};
         const {data: entity2data, keys: entity2keys} = majic2[key] || {};
         // majic1 copy of the received entity wins

@@ -164,6 +164,7 @@ and turns it in to
     "meta": {
         "revisionNumber": 0
     },
+    "__primaryEntities": ["articles"],
     "articles": {
         "keys": ["1"],
         "data": {
@@ -539,6 +540,7 @@ into the below object. Note the identifiers in the `data` object and `keys` arra
         "self": "resource-linkage"
     },
     "meta": {},
+    "__primaryEntities": ["articles"],
     "articles": {
         "keys": ["1:1"],
         "data": {
