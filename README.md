@@ -2,7 +2,7 @@
 
 ### Module Architecture for JsonAPI Ingesting Consumers
 
-[![CircleCI Build](https://circleci.com/gh/mduleone/majic-parser.svg?style=shield&branch=master)](https://circleci.com/gh/mduleone/majic-parser?branch=master) [![codecov.io](https://codecov.io/github/mduleone/majic-parser/coverage.svg?token=2fcc9286-547e-4289-a152-d86de592d100&branch=master)](https://codecov.io/github/mduleone/majic-parser?branch=master) [![npm version](https://img.shields.io/npm/v/majic-parser.svg?style=flat-square)](https://www.npmjs.com/package/majic-parser)
+[![CircleCI Build](https://circleci.com/gh/mduleone/majic-parser.svg?style=shield)](https://circleci.com/gh/mduleone/majic-parser) [![codecov](https://codecov.io/gh/mduleone/majic-parser/branch/master/graph/badge.svg)](https://codecov.io/gh/mduleone/majic-parser) [![npm version](https://img.shields.io/npm/v/majic-parser.svg?style=flat-square)](https://www.npmjs.com/package/majic-parser)
 
 This tool makes building front-end JavaScript applications against JsonAPI backends easier.
 
