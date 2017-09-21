@@ -1,6 +1,6 @@
 {
   "author": "Matt DuLeone (https://matt.dule.one/)",
-  "description": "",
+  "description": "Makes building front-end JavaScript applications against JsonAPI backends easier.",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
