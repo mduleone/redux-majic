@@ -139,6 +139,7 @@ describe('parseResponseFactory', () => {
                 "meta": {
                     "isTeapot": false
                 },
+                __primaryEntities: [],
                 links: {},
                 jsonapi: {}
             };

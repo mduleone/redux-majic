@@ -36,7 +36,7 @@ export function stringUniq(arr: string[]): string[] {
     return arr.reduce((agg, curr) => (agg.includes(curr) ? [...agg] : [...agg, curr]), []);
 }
 
-export function mergeMajicObjects(majic1: {}, majic2: {}): {} {
+export function mergeMajicObjects(majic1: {__primaryEntities: ?string[]}, majic2: {__primaryEntities: ?string[]}): {} {
     const majic1keys = Object.keys(majic1);
     let majic2keys = Object.keys(majic2);
 

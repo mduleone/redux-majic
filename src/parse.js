@@ -43,16 +43,16 @@ export function parseResponseFactory(identifier: Function): Function {
         return isEmpty(includedType.data) ? {} : includedType;
     }
 
-    function getIncluded(response: JsonApiResponse): {} {
+    function getIncluded(response: JsonApiResponse): {__primaryEntities: ?string[]} {
         return getAllIncludedTypes(response)
             .reduce((types, curr) => {
                 return ({...types, [curr]: extractIncludedType(response, curr)});
-            }, {});
+            }, {__primaryEntities: []});
     }
 
-    function getData(response: JsonApiResponse): {} {
+    function getData(response: JsonApiResponse): {__primaryEntities: ?string[]} {
         if (!response.data) {
-            return {};
+            return {__primaryEntities: []};
         }
 
         const dataArray = Array.isArray(response.data) ? response.data : [response.data];
