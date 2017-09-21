@@ -39,6 +39,7 @@ function getArticle(articleId) {
             'content-type': 'application/vnd.api+json'
         }
     })
+        .then(response => response.json())
         .then(parseResponse);
 }
 
@@ -479,6 +480,7 @@ function getArticle(articleId) {
             'content-type': 'application/vnd.api+json'
         }
     })
+        .then(response => response.json())
         .then(articleParser);
 }
 
