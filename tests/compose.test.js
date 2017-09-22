@@ -8,6 +8,41 @@ describe('composeRequest', () => {
     let actual;
     let expected;
 
+    beforeEach(() => {
+        schema = {
+            "type": "articles",
+            "attributes": ["title"],
+            "topLevelMeta": ["requestId"],
+            "meta": ["revisionNumber"],
+            "relationships": [
+                {
+                    "key": "author",
+                    "defaultType": "people"
+                },
+                {
+                    "key": "comments",
+                    "defaultType": "comments"
+                }
+            ],
+            "included": [
+                {
+                    "key": "author",
+                    "attributes": ["first-name", "last-name", "twitter"]
+                },
+                {
+                    "key": "comments",
+                    "attributes": ["body"],
+                    "relationships": [
+                        {
+                            "key": "author",
+                            "defaultType": "people"
+                        }
+                    ]
+                }
+            ]
+        };
+    });
+
     it('throws an error if the provided schema is invalid', () => {
         data = states.article1toCompose;
         schema = {};
@@ -17,7 +52,6 @@ describe('composeRequest', () => {
 
     it('throws an error if the provided data is missing an id field', () => {
         data = omit(states.article1toCompose, 'id');
-        schema = {...states.articleSchema};
 
         expect(() => {compose.composeRequest(data, schema)}).toThrow();
     });
@@ -31,7 +65,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with just topLevelMeta', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'topLevelMeta'])};
+        schema = pick(schema, ['type', 'topLevelMeta']);
         expected = states.topLevelMetaComposedArticle1;
         actual = compose.composeRequest(data, schema);
 
@@ -40,7 +74,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with extra topLevelMeta', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'topLevelMeta'])};
+        schema = pick(schema, ['type', 'topLevelMeta']);
         schema.topLevelMeta.push('extra');
         expected = states.topLevelMetaComposedArticle1;
         actual = compose.composeRequest(data, schema);
@@ -50,7 +84,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with just attributes', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'attributes'])};
+        schema = pick(schema, ['type', 'attributes']);
         expected = states.attributesComposedArticle1;
         actual = compose.composeRequest(data, schema);
 
@@ -59,7 +93,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with extra attributes', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'attributes'])};
+        schema = pick(schema, ['type', 'attributes']);
         schema.attributes.push('extra');
         expected = states.attributesComposedArticle1;
         actual = compose.composeRequest(data, schema);
@@ -69,7 +103,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with just relationships', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'relationships'])};
+        schema = pick(schema, ['type', 'relationships']);
         expected = states.relationshipsComposedArticle1;
         actual = compose.composeRequest(data, schema);
 
@@ -78,7 +112,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with extra relationships', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'relationships'])};
+        schema = pick(schema, ['type', 'relationships']);
         schema.relationships.push({key: 'extra'});
         expected = states.relationshipsComposedArticle1;
         actual = compose.composeRequest(data, schema);
@@ -88,7 +122,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with just meta', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'meta'])};
+        schema = pick(schema, ['type', 'meta']);
         expected = states.metaComposedArticle1;
         actual = compose.composeRequest(data, schema);
 
@@ -97,7 +131,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with extra meta', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'meta'])};
+        schema = pick(schema, ['type', 'meta']);
         schema.meta.push('extra');
         expected = states.metaComposedArticle1;
         actual = compose.composeRequest(data, schema);
@@ -107,7 +141,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with just relationships and included', () => {
         data = states.article1toCompose;
-        schema = {...pick(states.articleSchema, ['type', 'relationships', 'included'])};
+        schema = pick(schema, ['type', 'relationships', 'included']);
         expected = states.includedComposedArticle1;
         actual = compose.composeRequest(data, schema);
 
@@ -116,7 +150,7 @@ describe('composeRequest', () => {
 
     it('properly composes a JsonAPI request object with extra relationships and included', () => {
         data = states.article1toCompose;
-        schema = pick(states.articleSchema, ['type', 'relationships', 'included']);
+        schema = pick(schema, ['type', 'relationships', 'included']);
         schema.relationships.push({key: 'extra'});
         schema.included.push({key: 'extra'});
         expected = states.includedComposedArticle1;
@@ -125,9 +159,19 @@ describe('composeRequest', () => {
         expect(actual).toEqual(expected);
     });
 
+    it('properly composes a JsonAPI request object with relationships and included missing data keys', () => {
+        data = states.article1toCompose;
+        schema = pick(schema, ['type', 'relationships', 'included']);
+        schema.relationships.push({key: 'missing-data-relationship', meta: ['meta-key']});
+        schema.included.push({key: 'missing-data-relationship'});
+        expected = states.datalessIncludedComposedArticle1;
+        actual = compose.composeRequest(data, schema);
+
+        expect(actual).toEqual(expected);
+    });
+
     it('properly returns the fully composed JsonAPI request object', () => {
         data = states.article1toCompose;
-        schema = states.articleSchema;
         expected = states.composedArticle1
         actual = compose.composeRequest(data, schema);
 

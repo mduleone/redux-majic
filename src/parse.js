@@ -1,28 +1,28 @@
 // @flow
 
 import {get, pick, stringUniq, mergeMajicObjects, isEmpty} from './utils';
-import type {JsonApiResponse, JsonApiError, JsonApiEntity, ParsedMajicEntity, MagicEntities} from './types';
+import type {JsonApiResponse, JsonApiError, JsonApiEntity, ParsedMajicEntity, MajicEntities} from './types';
 
-export function getJsonapi(response: JsonApiResponse): {} {
+export function getJsonapi(response: JsonApiResponse): {[string]: string} {
     return get(response, 'jsonapi', {});
 }
 
-export function getLinks(response: {links?: {}}): {} {
+export function getLinks(response: {links?: {[string]: string}}): {[string]: string} {
     return get(response, 'links', {});
 }
 
-export function getMeta(response: {meta?: {}}): {} {
+export function getMeta(response: {meta?: {[string]: string}}): {[string]: string} {
     return get(response, 'meta', {});
 }
 
 export function getAllIncludedTypes(response: JsonApiResponse): string[] {
-    return stringUniq(get(response, 'included', []).map(({type}) => type));
+    return stringUniq(get(response, 'included', []).map(({type}: {type: string}) => type));
 }
 
-export function parseResponseFactory(identifier: Function): Function {
+export function parseResponseFactory(identifier: (response: JsonApiEntity) => string): (response: JsonApiResponse) => ParsedMajicEntity|{errors: JsonApiError[]} {
     function extractIncludedType(response: JsonApiResponse, type: string): {} {
-        const includedType = get(response, 'included', []).reduce(
-            (entities: {[string]: {data: {}, keys?: string[]}}, current: JsonApiEntity) => {
+        const includedType = (response.included || []).reduce(
+            (entities: {data: {[string]: {}}}, current: JsonApiEntity): {data: {[string]: {}}} => {
                 const {id, type: currType, attributes = {}, relationships = {}} = current;
                 if (currType === type) {
                     entities.data[identifier(current)] = {
@@ -58,7 +58,7 @@ export function parseResponseFactory(identifier: Function): Function {
         const dataArray: JsonApiEntity[] = Array.isArray(response.data) ? response.data : [response.data];
 
         return dataArray.reduce(
-            (entities: {__primaryEntities?: string[], [string]: MagicEntities}, current: JsonApiEntity) => {
+            (entities: {__primaryEntities?: string[], [string]: MajicEntities}, current: JsonApiEntity) => {
                 const {id, type, attributes = {}, relationships = {}} = current;
                 if (!(type in entities)) {
                     entities[type] = {data: {}, keys: []};

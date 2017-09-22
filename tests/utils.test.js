@@ -13,7 +13,7 @@ describe('get', () => {
         key = 'key';
         entity = {[key]: value};
         expected = value;
-        actual = utils.get(entity, key);
+        actual = utils.get(entity, key, '');
 
         expect(actual).toEqual(expected);
     });
@@ -23,7 +23,7 @@ describe('get', () => {
         key = 'key';
         entity = {'not-key': value};
         expected = {};
-        actual = utils.get(entity, key);
+        actual = utils.get(entity, key, {});
 
         expect(actual).toEqual(expected);
     });
@@ -44,7 +44,7 @@ describe('get', () => {
         key = 'key';
         entity = {[key]: value};
         expected = value;
-        actual = utils.get(entity, key);
+        actual = utils.get(entity, key, true);
 
         expect(actual).toEqual(expected);
     });

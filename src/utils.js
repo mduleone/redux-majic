@@ -2,7 +2,7 @@
 
 import type {ParsedMajicObjects} from './types';
 
-export function get(obj: {}, attribute: string, defaultValue: any = {}): any {
+export function get<T>(obj: {}, attribute: string, defaultValue: T): T {
     return (attribute in obj) ? obj[attribute] : defaultValue;
 }
 

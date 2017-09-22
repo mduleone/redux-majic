@@ -933,6 +933,81 @@ export const includedComposedArticle1 = {
     ]
 };
 
+export const datalessIncludedComposedArticle1 = {
+    "data": [
+        {
+            "type": "articles",
+            "id": "1",
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                },
+                "comments": {
+                    "data": [
+                        {
+                            "type": "comments",
+                            "id": "5"
+                        },
+                        {
+                            "type": "comments",
+                            "id": "12"
+                        }
+                    ]
+                },
+                "missing-data-relationship": {
+                    "meta": {
+                        "meta-key": "meta-value"
+                    }
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "people",
+            "id": "9",
+            "attributes": {
+                "first-name": "Dan",
+                "last-name": "Gebhardt",
+                "twitter": "dgeb"
+            }
+        },
+        {
+            "type": "comments",
+            "id": "5",
+            "attributes": {
+                "body": "First!"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "comments",
+            "id": "12",
+            "attributes": {
+                "body": "I like XML better"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                }
+            }
+        }
+    ]
+};
+
 export const attributesComposedArticle1 = {
     "data": [
         {
@@ -1017,6 +1092,15 @@ export const article1toCompose = {
                 }
             }
         ]
+    },
+    "missing-data-relationship": {
+        "links": {
+            "self": "http://example.com/articles/1/relationships/comments",
+            "related": "http://example.com/articles/1/comments"
+        },
+        "meta": {
+            "meta-key": "meta-value"
+        }
     }
 };
 

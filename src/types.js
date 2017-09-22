@@ -29,7 +29,8 @@ export type JsonApiResponse = {
 };
 
 export type JsonApiRequestRelationship = {
-    meta?: {},
+    meta?: {[string]: string},
+    links?: {[string]: string},
     data?: JsonApiRelationshipData|JsonApiRelationshipData[],
 };
 
@@ -66,6 +67,7 @@ export type MajicCompositionSchema = {
 export type MajicDataEntity = {
     id: string,
     type: string,
+    [string]: string|JsonApiRequestRelationship,
 };
 
 export type MajicJsonApiRequest = {
@@ -87,15 +89,15 @@ export type ParsedMajicEntity = {
     jsonapi?: {},
     links?: {},
     __primaryEntities?: string[],
-    [string]: MagicEntities,
+    [string]: MajicEntities,
 };
 
 export type ParsedMajicObjects = {
     __primaryEntities?: string[],
-    [string]: MagicEntities,
+    [string]: MajicEntities,
 };
 
-export type MagicEntities = {
+export type MajicEntities = {
     data: {},
     keys?: string[],
 };

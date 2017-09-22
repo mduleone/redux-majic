@@ -21,11 +21,11 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     }
 
     const {id, type} = data;
-    const topLevelMeta = {};
-    const attributes = {};
+    const topLevelMeta: {[string]: string} = {};
+    const attributes: {[string]: string} = {};
     const relationships: {[string]: JsonApiRequestRelationship} = {};
-    const meta = {};
-    let included = [];
+    const meta: {[string]: string} = {};
+    let included: MajicJsonApiEntity[] = [];
 
     if (type !== schema.type) {
         throw new Error('Data and schema have a type mismatch');
@@ -37,7 +37,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
                 return;
             }
 
-            topLevelMeta[attr] = data[attr];
+            topLevelMeta[attr] = get(data, attr, '');
         });
     }
 
@@ -47,7 +47,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
                 return;
             }
 
-            attributes[attr] = data[attr];
+            attributes[attr] = get(data, attr, '');
         });
     }
 
@@ -57,7 +57,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
                 return;
             }
 
-            relationships[relation.key] = buildRelationship(data[relation.key], relation);
+            relationships[relation.key] = buildRelationship(get(data, relation.key, {}), relation);
         });
     }
 
@@ -67,9 +67,15 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
                 return;
             }
 
-            const newIncluded = Array.isArray(data[includedEntity.key].data)
-                ? data[includedEntity.key].data.map(el => buildIncluded(el, includedEntity))
-                : [buildIncluded(data[includedEntity.key].data, includedEntity)];
+            const element: {data?: MajicDataEntity|MajicDataEntity[]} = get(data, includedEntity.key, {});
+
+            if (!element.data) {
+                return;
+            }
+
+            const newIncluded: MajicJsonApiEntity[] = (Array.isArray(element.data))
+                ? element.data.map((el: MajicDataEntity) => buildIncluded(el, includedEntity))
+                : [buildIncluded(element.data, includedEntity)];
 
             included = [...included, ...newIncluded];
         });
@@ -81,7 +87,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
                 return;
             }
 
-            meta[attr] = data[attr];
+            meta[attr] = get(data, attr, '');
         });
     }
 
@@ -128,7 +134,7 @@ export function buildIncluded(data: MajicDataEntity, schema: MajicIncluded): Maj
                 return;
             }
 
-            relationships[relation.key] = buildRelationship(data[relation.key], relation);
+            relationships[relation.key] = buildRelationship(get(data, relation.key, {}), relation);
         });
     }
 
@@ -151,7 +157,7 @@ export function buildIncluded(data: MajicDataEntity, schema: MajicIncluded): Maj
     };
 }
 
-export function buildRelationship(relation: {meta?: {}, data?: MajicDataEntity|MajicDataEntity[]}, schema: MajicRelationship): JsonApiRequestRelationship {
+export function buildRelationship(relation: {meta?: {[string]: string}, data?: MajicDataEntity|MajicDataEntity[]}, schema: MajicRelationship): JsonApiRequestRelationship {
     const meta = {};
     let data;
 
@@ -211,7 +217,7 @@ export function validateArray(candidate: MajicRelationship[]|MajicIncluded[]|str
     return true;
 }
 
-export function validateSimpleSchema(candidate: string, entity: string): boolean {
+export function validateSimpleSchema(candidate: ?string, entity: string): boolean {
     if (typeof candidate !== 'string') {
         throw new Error(`${entity} ${JSON.stringify(candidate)} is not a valid ${entity}`);
     }
