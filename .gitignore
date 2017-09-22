@@ -7,4 +7,6 @@ coverage
 jest
 .jest
 
+flow-coverage
+
 lib
