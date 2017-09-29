@@ -34,6 +34,14 @@ export function stringUniq(arr: string[]): string[] {
     return arr.reduce((agg: string[], curr: string) => (agg.includes(curr) ? [...agg] : [...agg, curr]), []);
 }
 
+export function stringWithout(arr: string[], remove: string|string[]): string[] {
+    if (!Array.isArray(remove)) {
+        remove = [remove];
+    }
+
+    return arr.reduce((without: string[], curr: string) => (remove.includes(curr) ? without : [...without, curr]), []);
+}
+
 export function mergeMajicObjects(majic1: ParsedMajicObjects, majic2: ParsedMajicObjects): ParsedMajicObjects {
     const majic1keys: string[] = Object.keys(majic1);
     let majic2keys: string[] = Object.keys(majic2);

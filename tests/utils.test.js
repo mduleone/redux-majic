@@ -157,7 +157,7 @@ describe('stringUniq', () => {
     let arr;
 
     it('returns an array of strings unchanged if they are all uniq', () => {
-        arr = ['these', 'words', 'are', 'unique'];
+        arr = ['these', 'strings', 'are', 'unique'];
         expected = arr;
         actual = utils.stringUniq(arr);
 
@@ -165,9 +165,52 @@ describe('stringUniq', () => {
     });
 
     it('returns an array of only unique strings form the array', () => {
-        arr = ['these', 'these', 'these', 'words', 'words', 'are', 'these', 'not', 'not', 'unique'];
-        expected = ['these', 'words', 'are', 'not', 'unique'];
+        arr = ['these', 'these', 'these', 'strings', 'strings', 'are', 'these', 'not', 'not', 'unique'];
+        expected = ['these', 'strings', 'are', 'not', 'unique'];
         actual = utils.stringUniq(arr);
+
+        expect(actual).toEqual(expected);
+    });
+});
+
+describe('stringWithout', () => {
+    let actual;
+    let expected;
+    let arr;
+    let remove;
+
+    it('returns an array of strings unchanged the remove string is not present', () => {
+        arr = ['these', 'strings', 'are', 'okay'];
+        remove = 'remove';
+        expected = arr;
+        actual = utils.stringWithout(arr, remove);
+
+        expect(actual).toEqual(expected);
+    });
+
+    it('returns an array of strings unchanged the remove strings are not present', () => {
+        arr = ['these', 'strings', 'are', 'okay'];
+        remove = ['remove'];
+        expected = arr;
+        actual = utils.stringWithout(arr, remove);
+
+        expect(actual).toEqual(expected);
+    });
+
+    it('returns an array of strings without the offending strings', () => {
+        arr = ['these', 'strings', 'are', 'not', 'okay'];
+        remove = 'not';
+        expected = ['these', 'strings', 'are', 'okay'];
+        actual = utils.stringWithout(arr, remove);
+
+        expect(actual).toEqual(expected);
+    });
+
+    it('returns an array of strings unchanged the remove strings are not present', () => {
+        arr = ['these', 'boom', 'strings', 'not', 'are', 'not', 'okay'];
+        remove = ['not', 'boom'];
+        expected = ['these', 'strings', 'are', 'okay'];
+        actual = utils.stringWithout(arr, remove);
 
         expect(actual).toEqual(expected);
     });

@@ -1,6 +1,6 @@
-import {omit} from '../src/utils';
-import * as parse from '../src/parse';
-import * as states from './states';
+import {omit} from '../../src/utils';
+import * as parse from '../../src/api/parse';
+import * as states from '../states';
 
 describe('getJsonapi', () => {
     let actual;

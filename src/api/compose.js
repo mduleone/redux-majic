@@ -1,6 +1,6 @@
 // @flow
 
-import {isEmpty, get} from './utils';
+import {isEmpty, get} from '../utils';
 import type {
     JsonApiResponse,
     JsonApiRequestRelationship,
@@ -11,7 +11,7 @@ import type {
     MajicIncluded,
     MajicJsonApiRequest,
     MajicJsonApiEntity,
-} from './types';
+} from '../types';
 
 export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSchema): MajicJsonApiRequest {
     validateSchema(schema);

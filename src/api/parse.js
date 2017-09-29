@@ -1,7 +1,7 @@
 // @flow
 
-import {get, pick, stringUniq, mergeMajicObjects, isEmpty} from './utils';
-import type {JsonApiResponse, JsonApiError, JsonApiEntity, ParsedMajicEntity, MajicEntities} from './types';
+import {get, pick, stringUniq, mergeMajicObjects, isEmpty} from '../utils';
+import type {JsonApiResponse, JsonApiError, JsonApiEntity, ParsedMajicEntity, MajicEntities} from '../types';
 
 export function getJsonapi(response: JsonApiResponse): {[string]: string} {
     return get(response, 'jsonapi', {});
