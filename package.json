@@ -1,6 +1,6 @@
 {
   "author": "Matt DuLeone (https://matt.dule.one/)",
-  "description": "Makes building front-end JavaScript applications against JsonAPI backends easier.",
+  "description": "Makes building Redux Front End JavaScript applications that against JsonAPI backends easier.",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -30,7 +30,7 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/**/*.js",
-      "!src/index.js",
+      "!src/**/index.js",
       "!tests/**",
       "!node_modules/**"
     ]
@@ -39,12 +39,15 @@
     "jsonapi",
     "json-api",
     "jsonapi-consumer",
-    "json-api-consumer"
+    "json-api-consumer",
+    "redux",
+    "majic",
+    "redux-majic"
   ],
   "license": "MIT",
   "main": "lib/index.js",
-  "name": "majic-parser",
-  "repository": "https://github.com/mduleone/majic-parser",
+  "name": "redux-majic",
+  "repository": "https://github.com/mduleone/redux-majic",
   "scripts": {
     "build": "babel src/ -d lib/",
     "prepublish": "yarn build",
@@ -53,5 +56,5 @@
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.0.8"
+  "version": "0.1.0"
 }
