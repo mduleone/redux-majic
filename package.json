@@ -1,6 +1,6 @@
 {
   "author": "Matt DuLeone (https://matt.dule.one/)",
-  "description": "Makes building Redux Front End JavaScript applications that against JsonAPI backends easier.",
+  "description": "Makes building Front End JavaScript applications (with or without Redux) against JsonAPI backends easier",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -56,5 +56,5 @@
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.1.1"
+  "version": "0.1.2"
 }

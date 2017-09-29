@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/gh/mduleone/redux-majic/branch/master/graph/badge.svg)](https://codecov.io/gh/mduleone/redux-majic)
 [![npm version](https://img.shields.io/npm/v/redux-majic.svg?style=flat-square)](https://www.npmjs.com/package/redux-majic)
 
-This tool makes building Redux Front End JavaScript applications that against JsonAPI backends easier.
+This tool makes building Front End JavaScript applications (with or without Redux) against JsonAPI backends easier.
 
 ## Installation
 
@@ -29,7 +29,7 @@ This is two separate pieces that play well together, `Majic` and `Redux`
 1. The `Majic` is a set of functions that parses JsonAPI response objects in to and composes JsonAPI request objects out of `MajicEntities`, or a format that plays very nicely with Redux
 2. The `Redux` piece is a set of Actions, Reducers, and Selectors that can ingest and store `MajicEntities` as they come from and go out to the request layer.
 
-When used together, they make interacting with complex JsonAPI entities, requests, and responses in Redux feel... :sparkles: Majical :sparkles:
+When used together, they make interacting with complex JsonAPI entities, requests, and responses in Redux feel... :sparkles: Magical :sparkles:
 
 ### JsonAPI Requests and Responses
 
