@@ -56,5 +56,5 @@
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.1.0"
+  "version": "0.1.1"
 }

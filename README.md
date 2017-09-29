@@ -2,9 +2,9 @@
 
 ### Module Architecture for JsonAPI Ingesting Consumers
 
-[![CircleCI Build](https://circleci.com/gh/mduleone/majic-parser.svg?style=shield)](https://circleci.com/gh/mduleone/majic-parser)
-[![codecov](https://codecov.io/gh/mduleone/majic-parser/branch/master/graph/badge.svg)](https://codecov.io/gh/mduleone/majic-parser)
-[![npm version](https://img.shields.io/npm/v/majic-parser.svg?style=flat-square)](https://www.npmjs.com/package/majic-parser)
+[![CircleCI](https://circleci.com/gh/mduleone/redux-majic.svg?style=shield)](https://circleci.com/gh/mduleone/redux-majic)
+[![codecov](https://codecov.io/gh/mduleone/redux-majic/branch/master/graph/badge.svg)](https://codecov.io/gh/mduleone/redux-majic)
+[![npm version](https://img.shields.io/npm/v/redux-majic.svg?style=flat-square)](https://www.npmjs.com/package/redux-majic)
 
 This tool makes building Redux Front End JavaScript applications that against JsonAPI backends easier.
 
