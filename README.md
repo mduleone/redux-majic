@@ -1,4 +1,4 @@
-#  Redux :sparkles: MAJIC :sparkles:
+# Redux :sparkles: MAJIC :sparkles:
 
 ### Module Architecture for JsonAPI Ingesting Consumers
 
