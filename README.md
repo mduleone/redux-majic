@@ -26,8 +26,8 @@ $ npm install --save redux-majic
 
 This is two separate pieces that play well together, `Majic` and `Redux`
 
-1. The `Majic` is a set of functions that parses JsonAPI response objects in to and composes JsonAPI request objects out of `MajicEntities`, or a format that plays very nicely with Redux
-2. The `Redux` piece is a set of Actions, Reducers, and Selectors that can ingest and store `MajicEntities` as they come from and go out to the request layer.
+1. The `Majic` is a set of functions that parses JsonAPI response objects in to and composes JsonAPI request objects out of `MajicEntities`, or a format that plays very nicely with Redux.
+2. The `Redux` piece is a set of Action Creators, Reducers, Selectors, and Constant strings (`type`s for the Action Creators) that can ingest and store `MajicEntities` as they come from and go out to the request layer.
 
 When used together, they make interacting with complex JsonAPI entities, requests, and responses in Redux feel... :sparkles: Magical :sparkles:
 
@@ -581,9 +581,9 @@ into the below object. Note the identifiers in the `data` object and `keys` arra
 
 ### Redux
 
-To put all of these pieces all together, we have several pieces that work together.
+We have several helpers that make working with Redux and `MajicEntities` extremely easy.
 
-#### Actions
+#### Action Creators
 
 To start, we have a standard action creator, [`createMajicAction`](./src/redux/actions.js#L9), which returns objects of type [`MajicAction`](./src/redux/types.js#L16).
 
@@ -598,27 +598,27 @@ type MajicAction = {
 }
 ```
 
-Using this, we built some standard Action Creators, which pass their data along to `createMajicAction` to ensure all of our actions have the same shape.
+We then built some standard Action Creators which pass their data along to `createMajicAction` to ensure all of our actions have the same shape.
 
-1. `receiveMajicEntitiesAction` - This can be used as a standard receive action that every slice of your store listens for, and using the provided reducers, properly receives all entities it is responsible for.
-2. `clearNamespaceAction` - We recommend segmenting and grouping requests in to different namespaces, and our provided Action Creators, Reducers, and Selectors help to make that easier. This Action Creator can be used as a standard clearing action that every slice of your stare listens for, and using the provided reducers, properly clears namespaces it is responsible for.
+1. `receiveMajicEntitiesAction` - Creates a standard receive action, type `RECEIVE_MAJIC_ENTITIES`, that every slice of your store can listen for. Using the provided reducers, every slice can properly receive all entities it is responsible for
+2. `clearNamespaceAction` - We recommend segmenting or grouping requests in to different namespaces, and our provided Action Creators, Reducers, and Selectors help to make that easier. This Action Creator creates a standard clearing action, type `CLEAR_NAMESPACE`, that every slice of your store can listen for. Using the provided reducers, every slice can properly clear namespaces it is responsible for
 
-#### Reducers
+#### Reducer Helpers
 
-We have three Reducer functions that you can use to make receiving `MajicEntities` in to your store very simple.
+We have three Reducer helper functions that you can use to make receiving `MajicEntities` in to your store very simple.
 
-1. `requestMajicNamespace` - This reducer adds the namespace to the slice of a store, as well as sets the namespace `isFetching` to `true`. We recommend using this in the request side of the request-respnse-error action cycle is typical with Redux.
-2. `receiveMajicEntitiesReducer` - This reducer accepts the slice of store, a `RECEIVE_MAJIC_ENTITIES` action, and the entities that the specific slice of the store should listen for, and processes all incoming receive requests. For an example set up, see below.
-3. `clearMajicNamespaceReducer` - This reducer listens for a `CLEAR_NAMESPACE` action, and then removes the namespace from every slice of store that it's in.
+1. `requestMajicNamespace` - This reducer helper adds the namespace to the slice of a store, as well as sets the namespace `isFetching` to `true`. We recommend using this in the request side of the request-response-error action cycle is typical with Redux
+2. `receiveMajicEntitiesReducer` - This reducer accepts the slice of store, a `RECEIVE_MAJIC_ENTITIES` action, and the entities that the specific slice of the store should listen for, and processes all incoming receive requests. For an example set up, see below
+3. `clearMajicNamespaceReducer` - This reducer listens for a `CLEAR_NAMESPACE` action, and then removes the namespace from every slice of store that it's in
 
 #### Selectors
 
 Finally, we have four Selectors to help us select entities from the slices of Redux store that we're building
 
-1. `selectEntityById` - The simplest selector. Reaches in to the provided slice of the store to grab the entity's map and selects the entity by id
+1. `selectEntityById` - Reaches in to the provided slice of the store to grab the entity's map and selects the entity by id
 2. `selectEntityByNamespaceAndId` - Reaches into the provided slice of the store to select the namespace
 3. `selectEntitiesByNamespace` - Reaches in to the namespace and maps the keys array into an array of entities
-4. `selectNamespaceIsFetching` - Reaches in to the namespace and returns the namespace's `isFetching`.
+4. `selectNamespaceIsFetching` - Reaches in to the namespace and returns the namespace's `isFetching`
 
 ##### Example
 
@@ -679,7 +679,15 @@ export default combineReducers({
 });
 ```
 
-This combined reducer would take the parsed response from [Parsing a JsonAPI Response](#Parsing-a-JsonAPI-Response) and create a store structured:
+This combined reducer would take the parsed response from [Parsing a JsonAPI Response](#Parsing-a-JsonAPI-Response) in the below action
+
+```javascript
+const parsedMajicObjects = {/* parsed response */};
+const meta = {namespace: 'single-article'};
+const action = receiveMajicEntitiesAction(parsedMajicObjects, meta);
+```
+
+and create below State tree
 
 ```javascript
 {
