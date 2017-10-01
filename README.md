@@ -612,19 +612,19 @@ We have three Reducer helper functions that you can use to make receiving `Majic
 
     This reducer can customize how entities are mapped in to the entity map, as well as mark entity types as non-primary through an optional config object. See the full docstring below
 
-```javascript
-/**
- *
- * @param {*} state
- * @param {MajicAction} action
- * @param {string|string[]} primaryEntities entity types to listen for as "primary" entities
- *   Primary entities are entity types stored in the associated namespace. Per JSONAPI, every request has at least one primary entity.
- * @param {{entities: ?string[], mapFunctions: ?{[string]: MajicMapper}}} config (optional)
- *   `entities` is the complete list of entities this reducer should receive. If it is omitted, it defaults to an array of `primaryEntities`. This is useful if a reducer needs to track multiple entities, but will only want to store some of them in the namespace
- *   `mapFunctions` is an object keyed on entity-types with special functions to use to update an entity-type's map if the standard map builder is insufficient.
- * @return {*}
- */
-```
+    ```javascript
+    /**
+    *
+    * @param {*} state
+    * @param {MajicAction} action
+    * @param {string|string[]} primaryEntities entity types to listen for as "primary" entities
+    *   Primary entities are entity types stored in the associated namespace. Per JSONAPI, every request has at least one primary entity.
+    * @param {{entities: ?string[], mapFunctions: ?{[string]: MajicMapper}}} config (optional)
+    *   `entities` is the complete list of entities this reducer should receive. If it is omitted, it defaults to an array of `primaryEntities`. This is useful if a reducer needs to track multiple entities, but will only want to store some of them in the namespace
+    *   `mapFunctions` is an object keyed on entity-types with special functions to use to update an entity-type's map if the standard map builder is insufficient.
+    * @return {*}
+    */
+    ```
 
 3. `clearMajicNamespaceReducer` - This reducer listens for a `CLEAR_NAMESPACE` action, and then removes the namespace from every slice of store that it's in
 
