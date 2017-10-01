@@ -26,18 +26,18 @@ $ npm install --save redux-majic
 
 This is two separate pieces that play well together, `Majic` and `Redux`
 
-1. The `Majic` is a set of functions that parses JsonAPI response objects in to and composes JsonAPI request objects out of `MajicEntities`, or a format that plays very nicely with Redux.
-2. The `Redux` piece is a set of Action Creators, Reducers, Selectors, and `type` strings (for the Action Creators) that can easily ingest and store `MajicEntities` as they come from and go out to the request layer.
+1. The [`Majic`](#majic---jsonapi-requests-and-responses) is a set of functions that parses JsonAPI response objects in to and composes JsonAPI request objects out of `MajicEntities`, or a format that plays very nicely with Redux.
+2. The [`Redux`](#redux) piece is a set of Action Creators, Reducers, Selectors, and `type` strings (for the Action Creators) that can easily ingest and store `MajicEntities` as they come from and go out to the request layer.
 
 When used together, they make interacting with complex JsonAPI entities, requests, and responses in Redux feel... :sparkles: Magical :sparkles:
 
-### JsonAPI Requests and Responses
+### `Majic` - JsonAPI Requests and Responses
 
 In practice, we've used this sitting in the api-layer of an application, abstracting away the need to know about the JsonAPI implementation in the application. We've seen it as an elegant way to uniformly handle and store data delivered via JsonAPI.
 
 In these examples, we're using `isomorphic-fetch` as a stand in for the native browesr `fetch`.
 
-#### Parsing a JsonAPI Response
+#### `parseResponse` - Parsing a JsonAPI Response
 
 ```javascript
 import fetch from 'isomorphic-fetch';
@@ -265,7 +265,7 @@ and turns it in to a [`ParsedMajicEntity`](./src/types.js#L87)
 }
 ```
 
-#### Converting a Majic Data Object in to a JsonAPI Request
+#### `composeRequest` - Converting a Majic Data Object in to a JsonAPI Request
 
 ```javascript
 import fetch from 'isomorphic-fetch';
@@ -463,11 +463,11 @@ takes the above [`MajicDataEntity`](./src/types.js#L67) of an article (with its 
 }
 ```
 
-### Advanced
+#### `parseResponseFactory` - Advanced
 
 If you need to do something that involves receiving and tracking entites with non-unique ids (i.e., tracking multiple revisions of the same entity), we provide a `parseResponseFactory` that accepts an `identifier` function that accepts an entity and returns the key used to identify the distinct entities.
 
-#### Usage
+##### Usage
 
 For example, if you have `article` type entities that have `revisionNumbers` on their `meta` fields, we could use the below identity function
 ```javascript
@@ -637,9 +637,9 @@ Finally, we have four Selectors to help us select entities from the slices of Re
 3. `selectEntitiesByNamespace` - Reaches in to the namespace and maps the keys array into an array of entities
 4. `selectNamespaceIsFetching` - Reaches in to the namespace and returns the namespace's `isFetching`
 
-##### Example
+#### Example
 
-Using the above data from [JsonAPI Requests and Responses](#JsonAPI-Requests-and-Responses), imagine we have slices of our store for `articles`, `comments`, and `people` respectively. Combining the slices in to a single store might look like this:
+Using the above data from [JsonAPI Requests and Responses](#majic---jsonapi-requests-and-responses), imagine we have slices of our store for `articles`, `comments`, and `people` respectively. Combining the slices in to a single store might look like this:
 
 ```javascript
 import {combineReducers} from 'redux';
@@ -696,7 +696,7 @@ export default combineReducers({
 });
 ```
 
-This combined reducer would take the parsed response from [Parsing a JsonAPI Response](#Parsing-a-JsonAPI-Response) in the below action
+This combined reducer would take the parsed response from [Parsing a JsonAPI Response](#parseresponse---parsing-a-jsonapi-response) in the below action
 
 ```javascript
 const parsedMajicObjects = {/* parsed response */};
