@@ -40,8 +40,12 @@
     "json-api",
     "jsonapi-consumer",
     "json-api-consumer",
-    "redux",
     "majic",
+    "redux",
+    "redux-jsonapi",
+    "redux-json-api",
+    "redux-jsonapi-consumer",
+    "redux-json-api-consumer",
     "redux-majic"
   ],
   "license": "MIT",
@@ -56,5 +60,5 @@
     "test:coverage": "jest --coverage",
     "test:coverage:ci": "jest --coverage --runInBand"
   },
-  "version": "0.1.3"
+  "version": "0.1.4"
 }
