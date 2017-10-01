@@ -47,10 +47,10 @@ export function standardMapper(
  * @param {*} state
  * @param {MajicAction} action
  * @param {string|string[]} primaryEntities entity types to listen for as "primary" entities
- *          Primary entities are entity types we store in the associated namespace. Per JSONAPI, every request has at least one primary entity.
- * @param {ReceiveMajicConfigObject?} config (optional) {entities: ?string[], mapFunctions: ?{[string]: MajicMapper}}
- *      `entities` is the complete list of entities this reducer should receive. If it is omitted, it defaults to `primaryEntities`. This is useful if a reducer needs to track multiple entities, but will never want to store some of them in the namespace
- *      `mapFunctions` is a object keyed on entity-types with special functions to use to update an entity-type's map if the standard map builder is insufficient.
+ *          Primary entities are entity types stored in the associated namespace. Per JSONAPI, every request has at least one primary entity.
+ * @param {{entities: ?string[], mapFunctions: ?{[string]: MajicMapper}}} config (optional)
+ *      `entities` is the complete list of entities this reducer should receive. If it is omitted, it defaults to `primaryEntities`. This is useful if a reducer needs to track multiple entities, but will only want to store some of them in the namespace
+ *      `mapFunctions` is an object keyed on entity-types with special functions to use to update an entity-type's map if the standard map builder is insufficient.
  * @return {*}
  */
 export function receiveMajicEntitiesReducer(
