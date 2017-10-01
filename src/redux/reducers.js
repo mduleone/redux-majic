@@ -5,6 +5,12 @@ import type {MajicEntities, ParsedMajicObjects} from '../types';
 import {RECEIVE_MAJIC_ENTITIES, CLEAR_NAMESPACE} from './constants';
 import {omit, isEmpty, stringUniq, stringWithout} from '../utils';
 
+/**
+ * 
+ * @param {*} state
+ * @param {MagicAction} action
+ * @return {*}
+ */
 export function requestMajicNamespace(state: {namespaces?: string[]}, {meta: {namespace}}: MajicAction): {namespaces?: string[]} {
     if (!namespace) {
         return state;
@@ -22,8 +28,8 @@ export function requestMajicNamespace(state: {namespaces?: string[]}, {meta: {na
 
 /**
  * 
- * @param {[string]: {*}} existingMap 
- * @param {data: {[string]: {*}}} receivedEntities 
+ * @param {[string]: {*}} existingMap
+ * @param {data: {[string]: {*}}} receivedEntities
  * @return {[string]: {*}}
  */
 export function standardMapper(
@@ -38,8 +44,8 @@ export function standardMapper(
 
 /**
  * 
- * @param {*} state 
- * @param {MajicAction} action 
+ * @param {*} state
+ * @param {MajicAction} action
  * @param {string|string[]} primaryEntities entity types to listen for as "primary" entities
  *          Primary entities are entity types we store in the associated namespace. Per JSONAPI, every request has at least one primary entity.
  * @param {ReceiveMajicConfigObject?} config (optional) {entities: ?string[], mapFunctions: ?{[string]: MajicMapper}}

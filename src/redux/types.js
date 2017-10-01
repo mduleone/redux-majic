@@ -17,4 +17,7 @@ export type MajicAction = {
     type: string,
     payload: {},
     meta: {},
+    callbacks: {
+        [string]: ?Function,
+    }
 };
