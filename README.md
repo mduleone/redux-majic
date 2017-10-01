@@ -6,9 +6,7 @@
 [![codecov](https://codecov.io/gh/mduleone/redux-majic/branch/master/graph/badge.svg)](https://codecov.io/gh/mduleone/redux-majic)
 [![npm version](https://img.shields.io/npm/v/redux-majic.svg?style=flat-square)](https://www.npmjs.com/package/redux-majic)
 
-Redux Majic makes building client-side JavaScript applications using Redux* against [JsonAPI](http://jsonapi.org/) backends easier.
-
-\* Using Redux isn't necessary to get the benefits of the transformation between JsonAPI request/response objects and Majic entities.
+Redux Majic makes building client-side JavaScript applications using Redux against [JsonAPI](http://jsonapi.org/) backends easier.
 
 ## Installation
 
