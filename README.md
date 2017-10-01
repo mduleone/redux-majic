@@ -29,7 +29,7 @@ $ npm install --save redux-majic
 This is two separate pieces that play well together, `Majic` and `Redux`
 
 1. The `Majic` is a set of functions that parses JsonAPI response objects in to and composes JsonAPI request objects out of `MajicEntities`, or a format that plays very nicely with Redux.
-2. The `Redux` piece is a set of Action Creators, Reducers, Selectors, and Constant strings (`type`s for the Action Creators) that can ingest and store `MajicEntities` as they come from and go out to the request layer.
+2. The `Redux` piece is a set of Action Creators, Reducers, Selectors, and `type` strings (for the Action Creators) that can easily ingest and store `MajicEntities` as they come from and go out to the request layer.
 
 When used together, they make interacting with complex JsonAPI entities, requests, and responses in Redux feel... :sparkles: Magical :sparkles:
 
