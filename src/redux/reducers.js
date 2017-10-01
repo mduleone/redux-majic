@@ -49,7 +49,7 @@ export function standardMapper(
  * @param {string|string[]} primaryEntities entity types to listen for as "primary" entities
  *          Primary entities are entity types stored in the associated namespace. Per JSONAPI, every request has at least one primary entity.
  * @param {{entities: ?string[], mapFunctions: ?{[string]: MajicMapper}}} config (optional)
- *      `entities` is the complete list of entities this reducer should receive. If it is omitted, it defaults to `primaryEntities`. This is useful if a reducer needs to track multiple entities, but will only want to store some of them in the namespace
+ *      `entities` is the complete list of entities this reducer should receive. If it is omitted, it defaults to an array of `primaryEntities`. This is useful if a reducer needs to track multiple entities, but will only want to store some of them in the associated namespaces
  *      `mapFunctions` is an object keyed on entity-types with special functions to use to update an entity-type's map if the standard map builder is insufficient.
  * @return {*}
  */
