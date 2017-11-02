@@ -2,7 +2,6 @@
 
 import {isEmpty, get} from '../utils';
 import type {
-    JsonApiResponse,
     JsonApiRequestRelationship,
     JsonApiRelationshipData,
     MajicCompositionSchema,
@@ -13,7 +12,13 @@ import type {
     MajicJsonApiEntity,
 } from '../types';
 
-export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSchema): MajicJsonApiRequest {
+type ComposeOptions = {single: boolean};
+
+export function composeRequest(
+  data: MajicDataEntity,
+  schema: MajicCompositionSchema,
+  options: ComposeOptions = {single: false}
+): MajicJsonApiRequest {
     validateSchema(schema);
 
     if (!data.id) {
@@ -100,7 +105,7 @@ export function composeRequest(data: MajicDataEntity, schema: MajicCompositionSc
     };
 
     return {
-        data: [responseData],
+        data: options.single ? responseData : [responseData],
         ...(isEmpty(included) ? {} : {included}),
         ...(isEmpty(topLevelMeta) ? {} : {meta: topLevelMeta}),
     };

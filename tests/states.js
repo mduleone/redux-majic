@@ -821,6 +821,82 @@ export const composedArticle1 = {
         }
     ]
 };
+export const composedSingleArticle1 = {
+    "meta": {
+        "requestId": 42
+    },
+    "data": {
+        "type": "articles",
+        "id": "1",
+        "attributes": {
+            "title": "JSON API paints my bikeshed!"
+        },
+        "relationships": {
+            "author": {
+                "data": {
+                    "type": "people",
+                    "id": "9"
+                }
+            },
+            "comments": {
+                "data": [
+                    {
+                        "type": "comments",
+                        "id": "5"
+                    },
+                    {
+                        "type": "comments",
+                        "id": "12"
+                    }
+                ]
+            }
+        },
+        "meta": {
+            "revisionNumber": 1
+        }
+    },
+    "included": [
+        {
+            "type": "people",
+            "id": "9",
+            "attributes": {
+                "first-name": "Dan",
+                "last-name": "Gebhardt",
+                "twitter": "dgeb"
+            }
+        },
+        {
+            "type": "comments",
+            "id": "5",
+            "attributes": {
+                "body": "First!"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "2"
+                    }
+                }
+            }
+        },
+        {
+            "type": "comments",
+            "id": "12",
+            "attributes": {
+                "body": "I like XML better"
+            },
+            "relationships": {
+                "author": {
+                    "data": {
+                        "type": "people",
+                        "id": "9"
+                    }
+                }
+            }
+        }
+    ]
+};
 
 export const metaComposedArticle1 = {
     "data": [

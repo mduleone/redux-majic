@@ -170,10 +170,18 @@ describe('composeRequest', () => {
         expect(actual).toEqual(expected);
     });
 
-    it('properly returns the fully composed JsonAPI request object', () => {
+    it('properly returns the fully composed JsonAPI request object, as a data array when no options object is omitted', () => {
         data = states.article1toCompose;
-        expected = states.composedArticle1
+        expected = states.composedArticle1;
         actual = compose.composeRequest(data, schema);
+
+        expect(actual).toEqual(expected);
+    });
+
+    it('properly returns the fully composed JsonAPI request object, as a data object with {single: true} options object', () => {
+        data = states.article1toCompose;
+        expected = states.composedSingleArticle1;
+        actual = compose.composeRequest(data, schema, {single: true});
 
         expect(actual).toEqual(expected);
     });

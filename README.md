@@ -380,7 +380,7 @@ function putArticle(article) {
 putArticle(article);
 ```
 
-takes the above [`MajicDataEntity`](./src/types.js#L67) of an article (with its related entites expanded) and turns it in to a JsonAPI Request object
+takes the above [`MajicDataEntity`](./src/types.js#L67) of an article (with its related entites expanded) and turns it in to a JsonAPI Request object below. Notice that the object returns an array on the primary `data` key. As of version 0.1.9, to return an object on the primary `data` key, pass an optional options third parameter: `{single: true}`.
 
 ```javascript
 {
@@ -585,7 +585,7 @@ We have several helpers that make working with Redux and `MajicEntities` extreme
 
 #### Action Creators
 
-To start, we have a standard action creator, [`createMajicAction`](./src/redux/actions.js#L9), which returns objects of type [`MajicAction`](./src/redux/types.js#L16).
+To start, we have a standard action creator, [`createMajicAction`](./src/redux/actions.js#L9), which returns objects of type [`MajicAction`](./src/redux/types.js#L16). As of version 0.1.9, `MajicActions` are also valid [`Flux Standard Actions`](https://github.com/acdlite/flux-standard-action)!
 
 ```javascript
 type MajicAction = {
@@ -594,7 +594,8 @@ type MajicAction = {
     meta: {},
     callbacks: {
         [string]: ?Function,
-    }
+    },
+    error: boolean
 }
 ```
 

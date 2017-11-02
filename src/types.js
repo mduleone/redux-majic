@@ -71,7 +71,7 @@ export type MajicDataEntity = {
 };
 
 export type MajicJsonApiRequest = {
-    data: MajicJsonApiEntity[],
+    data: MajicJsonApiEntity|MajicJsonApiEntity[],
     meta?: {},
     included?: MajicJsonApiEntity[],
 };
