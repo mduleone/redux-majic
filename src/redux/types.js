@@ -19,5 +19,6 @@ export type MajicAction = {
     meta: {},
     callbacks: {
         [string]: ?Function,
-    }
+    },
+    error: boolean,
 };

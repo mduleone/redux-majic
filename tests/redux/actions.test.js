@@ -7,6 +7,7 @@ describe('createMajicAction', () => {
     let payload;
     let meta;
     let callbacks;
+    let error;
     let actual;
     let expected;
 
@@ -15,9 +16,10 @@ describe('createMajicAction', () => {
         payload = {};
         meta = {};
         callbacks = {};
+        error = true;
     });
 
-    it('returns an object passing through the received `type`, `payload`, and `meta`, and ensures callbacks has a null default', () => {
+    it('returns an object passing through the received `type`, `payload`, `meta`, and `error`, and ensures callbacks has a null default', () => {
         expected = {
             type,
             payload,
@@ -25,9 +27,26 @@ describe('createMajicAction', () => {
             callbacks: {
                 default: null,
             },
+            error: false,
         };
 
         actual = actions.createMajicAction(type, payload, meta);
+
+        expect(actual).toEqual(expected);
+    });
+
+    it('returns an object passing through the received `type`, `payload`, `meta`, and `error`, and ensures callbacks has a null default', () => {
+        expected = {
+            type,
+            payload,
+            meta,
+            callbacks: {
+                default: null,
+            },
+            error: true,
+        };
+
+        actual = actions.createMajicAction(type, payload, meta, callbacks, error);
 
         expect(actual).toEqual(expected);
     });
@@ -40,6 +59,7 @@ describe('createMajicAction', () => {
             callbacks: {
                 default: null,
             },
+            error: false,
         };
 
         actual = actions.createMajicAction(type);

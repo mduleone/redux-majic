@@ -4,7 +4,7 @@ import type {ReceiveMajicMeta, MajicAction} from './types';
 import type {ParsedMajicObjects} from '../types';
 import {RECEIVE_MAJIC_ENTITIES, CLEAR_NAMESPACE} from './constants';
 
-export function createMajicAction(type: string, payload: {} = {}, meta: {} = {}, callbacks: {[string]: Function} = {}): MajicAction {
+export function createMajicAction(type: string, payload: {} = {}, meta: {} = {}, callbacks: {[string]: Function} = {}, error: boolean = false): MajicAction {
     return {
         type,
         payload,
@@ -13,6 +13,7 @@ export function createMajicAction(type: string, payload: {} = {}, meta: {} = {},
             default: null,
             ...callbacks,
         },
+        error,
     };
 }
 
