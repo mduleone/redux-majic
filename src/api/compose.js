@@ -224,7 +224,7 @@ export function validateArray(candidate: MajicRelationship[]|MajicIncluded[]|str
 
 export function validateSimpleSchema(candidate: ?string, entity: string): boolean {
     if (typeof candidate !== 'string') {
-        throw new Error(`${entity} ${JSON.stringify(candidate)} is not a valid ${entity}`);
+        throw new Error(`${entity} ${JSON.stringify(candidate || 'Unknown Entity')} is not a valid ${entity}`);
     }
 
     return true;
